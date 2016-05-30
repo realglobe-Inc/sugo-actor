@@ -9,17 +9,21 @@ const sgSocket = require('sg-socket')
 const assert = require('assert')
 const co = require('co')
 
-const { SpotEvents } = require('sg-socket-constants')
+const { GreetingEvents, RemoteEvents, AcknowledgeStatus } = require('sg-socket-constants')
+
+const { HI, BYE } = GreetingEvents
+const { OK, NG } = AcknowledgeStatus
+const { INTERFACE } = RemoteEvents
 
 describe('sugo-spot', () => {
   let port = 9872
   let server
   before(() => co(function * () {
-    const { HI, BYE, ABOUT } = SpotEvents
     server = sgSocket(port)
     server.on('connection', (socket) => {
-      socket.on(HI, (data) => socket.emit(HI))
-      socket.on(BYE, (data) => socket.emit(BYE))
+      socket.on(HI, (data, callback) => callback(OK))
+      socket.on(BYE, (data, callback) => callback(OK))
+      socket.on(INTERFACE, (data, callback) => callback(OK))
     })
   }))
 
@@ -36,7 +40,6 @@ describe('sugo-spot', () => {
     })
 
     yield spot.connect()
-
     yield spot.disconnect()
   }))
 })

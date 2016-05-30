@@ -22,8 +22,8 @@
   "homepage": "https://github.com/realglobe-Inc/sugo-spot#readme",
   "dependencies": {
     "co": "^4.6.0",
-    "sg-socket-client": "^1.1.1",
-    "sg-socket-constants": "^1.1.2",
+    "sg-socket-client": "^1.1.4",
+    "sg-socket-constants": "^1.1.5",
     "uuid": "^2.0.2"
   },
   "devDependencies": {
@@ -33,11 +33,11 @@
     "ape-reporting": "^3.0.1",
     "ape-tasking": "^4.0.0",
     "ape-testing": "^4.0.0",
-    "ape-tmpl": "^5.0.1",
+    "ape-tmpl": "^5.0.2",
     "ape-updating": "^3.0.2",
     "coz": "^6.0.2",
     "injectmock": "^2.0.0",
-    "sg-socket": "^1.0.5"
+    "sg-socket": "^1.0.6"
   },
   "engines": {
     "node": ">=6",
