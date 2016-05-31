@@ -10,15 +10,15 @@ module.exports = function mockSpotBash () {
    * @returns {Promise}
    */
   function bash (ctx) {
-    let { cmd, params, socket } = ctx
+    let { cmd, params, pipe } = ctx
     switch (cmd) {
       case 'exec':
         return co(function * () {
           return yield new Promise((resolve, reject) => {
             let spawned = childProcess.spawn(cmd)
-            spawned.stdout.on('data', (data) => socket.emit('stdout', data))
-            spawned.stderr.on('data', (data) => socket.emit('stderr', data))
-            socket.on('stdin', (data) => spawned.stdin.write(data))
+            spawned.stdout.on('data', (data) => pipe.emit('stdout', data))
+            spawned.stderr.on('data', (data) => pipe.emit('stderr', data))
+            pipe.on('stdin', (data) => spawned.stdin.write(data))
             spawned.on('error', (err) => reject(err))
             spawned.on('close', (code) => resolve(code))
           })
@@ -29,9 +29,16 @@ module.exports = function mockSpotBash () {
   }
 
   return Object.assign(bash, {
-    $desc: 'Bash interface',
-    $methods: {
-      exec: { $desc: 'Execute a command' }
+    spec: {
+      desc: 'Bash interface',
+      methods: {
+        exec: {
+          desc: 'Execute a command',
+          params: [
+            { name: 'script', type: 'string' }
+          ]
+        }
+      }
     }
   })
 }

@@ -13,7 +13,7 @@ const { GreetingEvents, RemoteEvents, AcknowledgeStatus } = require('sg-socket-c
 
 const { HI, BYE } = GreetingEvents
 const { OK, NG } = AcknowledgeStatus
-const { INTERFACE } = RemoteEvents
+const { INTERFACE, ACTION } = RemoteEvents
 
 describe('sugo-spot', () => {
   let port = 9872
