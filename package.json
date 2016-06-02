@@ -1,6 +1,6 @@
 {
   "name": "sugo-spot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Thing edge module",
   "main": "lib",
   "scripts": {
