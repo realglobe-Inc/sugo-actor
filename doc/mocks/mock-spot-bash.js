@@ -10,7 +10,7 @@ module.exports = function mockSpotBash () {
         let { params, pipe } = ctx
         return co(function * () {
           return yield new Promise((resolve, reject) => {
-            let { cmd, args, options } = params
+            let [ cmd, args, options ] = params
             let spawned = childProcess.spawn(cmd, args, options)
             spawned.stdout.on('data', (data) => pipe.emit('stdout', data))
             spawned.stderr.on('data', (data) => pipe.emit('stderr', data))
