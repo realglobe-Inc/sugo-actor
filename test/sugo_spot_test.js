@@ -6,7 +6,6 @@
 
 const SugoSpot = require('../lib/sugo_spot.js')
 const sgSocket = require('sg-socket')
-const sgSocketClient = require('sg-socket-client')
 const assert = require('assert')
 const apemansleep = require('apemansleep')
 const co = require('co')
@@ -41,11 +40,8 @@ describe('sugo-spot', () => {
   }))
 
   after(() => co(function * () {
-    yield new Promise((resolve) => {
-      setTimeout(() => {
-        server.close(resolve())
-      }, 200)
-    })
+    yield sleep.sleep(200)
+    server.close()
   }))
 
   it('Sugo spot', () => co(function * () {
