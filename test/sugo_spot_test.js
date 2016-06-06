@@ -25,7 +25,7 @@ describe('sugo-spot', () => {
     server = sgSocket(port)
     server.of('/spots').on('connection', (socket) => {
       socket.on(HI, (data, callback) => {
-        callback({ status: OK })
+        callback({ status: OK, payload: { key: data.key, token: data.token } })
       })
       socket.on(BYE, (data, callback) => {
         callback({ status: OK })
