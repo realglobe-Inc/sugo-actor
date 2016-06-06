@@ -21,6 +21,7 @@ describe('sugo-spot', () => {
   let sleep = apemansleep.create({})
   let port = 9872
   let server
+  let sockets = {}
   before(() => co(function * () {
     server = sgSocket(port)
     server.of('/spots').on('connection', (socket) => {
@@ -35,19 +36,7 @@ describe('sugo-spot', () => {
       })
       socket.on(PIPE, (data) => {
       })
-      setTimeout(() => co(function * () {
-        socket.eimt(PERFORM, {
-          interface: 'bash',
-          name: 'spawn',
-          params: {
-            cmd: 'ls',
-            args: '-la',
-            options: {}
-          }
-        }, () => {
-          console.log('!!!performed')
-        })
-      }), 10)
+      sockets[ socket.id ] = socket
     })
   }))
 
@@ -69,8 +58,28 @@ describe('sugo-spot', () => {
     })
 
     yield spot.connect()
+    yield sleep.sleep(10)
 
-    yield sleep.sleep(1200)
+    for (let id of Object.keys(sockets)) {
+      let socket = sockets[ id ]
+      let piped = false
+      socket.on(PIPE, (data) => {
+        assert.ok(data)
+        piped = true
+      })
+      yield new Promise((resolve, reject) =>
+        socket.emit(PERFORM, {
+          interface: 'bash',
+          name: 'spawn',
+          params: [
+            'ls', [ '-la' ], {}
+          ]
+        }, (res) => resolve())
+      )
+      yield sleep.sleep(10)
+      assert.ok(piped)
+    }
+    yield sleep.sleep(100)
     yield spot.disconnect()
   }))
 })
