@@ -15,7 +15,7 @@ const { GreetingEvents, RemoteEvents, AcknowledgeStatus } = require('sg-socket-c
 
 const { HI, BYE } = GreetingEvents
 const { OK, NG } = AcknowledgeStatus
-const { INTERFACE, ACTION } = RemoteEvents
+const { SPEC, PERFORM, PIPE } = RemoteEvents
 
 describe('sugo-spot', () => {
   let sleep = apemansleep.create({})
@@ -23,22 +23,31 @@ describe('sugo-spot', () => {
   let server
   before(() => co(function * () {
     server = sgSocket(port)
-    server.of('spots').on('connection', (socket) => {
-      socket.on(HI, (data, callback) => callback({ status: OK }))
-      socket.on(BYE, (data, callback) => callback({ status: OK }))
-      socket.on(INTERFACE, (data, callback) => callback({ status: OK }))
+    server.of('/spots').on('connection', (socket) => {
+      socket.on(HI, (data, callback) => {
+        callback({ status: OK })
+      })
+      socket.on(BYE, (data, callback) => {
+        callback({ status: OK })
+      })
+      socket.on(SPEC, (data, callback) => {
+        callback({ status: OK })
+      })
+      socket.on(PIPE, (data) => {
+      })
       setTimeout(() => co(function * () {
-        console.log('!!hoge')
-        socket.eimt(ACTION, {
-          target: 'bash',
+        socket.eimt(PERFORM, {
+          interface: 'bash',
           name: 'spawn',
           params: {
             cmd: 'ls',
             args: '-la',
             options: {}
           }
+        }, () => {
+          console.log('!!!performed')
         })
-      }), 100)
+      }), 10)
     })
   }))
 
@@ -61,7 +70,7 @@ describe('sugo-spot', () => {
 
     yield spot.connect()
 
-    yield sleep.sleep(100)
+    yield sleep.sleep(1200)
     yield spot.disconnect()
   }))
 })

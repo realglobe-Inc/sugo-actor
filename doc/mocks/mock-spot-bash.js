@@ -24,7 +24,7 @@ module.exports = function mockSpotBash () {
     $spec: {
       $desc: 'Bash interface',
       $methods: {
-        exec: {
+        spawn: {
           $desc: 'Spawn a command',
           $params: [
             { $name: 'cmd', $type: 'string', $desc: 'Command to spawn' },
