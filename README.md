@@ -43,6 +43,8 @@ Thing edge module
 <a name="overview"></a>
 
 
+SUGO-Spot is a local server which works as a client of SUGO-Cloud and forward commands to edge components on internal network. 
+  
 
 <!-- Overview End -->
 
@@ -70,6 +72,12 @@ Usage
 ---------
 
 ```javascript
+#!/usr/bin/env node
+
+/**
+ * This is an example to run local spot server
+ */
+
 'use strict'
 
 const sugoSpot = require('sugo-spot')
@@ -81,17 +89,14 @@ co(function * () {
   let spot = sugoSpot(CLOUD_URL, {
     key: 'my-spot-01',
     interfaces: {
-      // Add plugin to provide bash interface
-      bash: require('sugo-spot-bash')({})
+      // Add plugin to provide shell interface
+      shell: require('sugo-spot-shell')({})
     }
   })
 
 // Connect to cloud server
   yield spot.connect()
-}).catch((err) => {
-  console.error(err)
-  /* ... */
-})
+}).catch((err) => console.error(err))
 
 ```
 
