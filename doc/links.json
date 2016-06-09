@@ -1,1 +1,5 @@
-{}
+{
+  "sugos": "https://github.com/realglobe-Inc/sugos",
+  "sugo-cloud": "https://github.com/realglobe-Inc/sugo-cloud",
+  "sugo-terminal": "https://github.com/realglobe-Inc/sugo-terminal"
+}
