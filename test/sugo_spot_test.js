@@ -49,7 +49,7 @@ describe('sugo-spot', () => {
     let spot = new SugoSpot(url, {
       key: 'hogehoge',
       interfaces: {
-        bash: require('../doc/mocks/mock-spot-bash')()
+        bash: require('../doc/mocks/mock-interface-bash')()
       }
     })
 

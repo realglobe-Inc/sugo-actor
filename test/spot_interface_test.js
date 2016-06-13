@@ -19,9 +19,9 @@ describe('spot-interface', () => {
 
   it('Spot interface', () => co(function * () {
     let bash = new SpotInterface(
-      require('../doc/mocks/mock-spot-bash')()
+      require('../doc/mocks/mock-interface-bash')()
     )
-    let exitCode = yield bash.invoke('spawn', [
+    let exitCode = yield bash.$$invoke('spawn', [
       'ls',
       [ '-la', '.' ]
     ], {

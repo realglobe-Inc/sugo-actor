@@ -1,6 +1,6 @@
 {
   "name": "sugo-spot",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Thing edge module",
   "main": "lib",
   "scripts": {
@@ -33,7 +33,7 @@
     "ape-formatting": "^1.0.0",
     "ape-releasing": "^3.1.1",
     "ape-reporting": "^3.0.1",
-    "ape-tasking": "^4.0.0",
+    "ape-tasking": "^4.0.1",
     "ape-testing": "^4.0.0",
     "ape-tmpl": "^5.0.2",
     "ape-updating": "^3.0.2",
