@@ -66,7 +66,7 @@ describe('sugo-spot', () => {
       yield new Promise((resolve, reject) =>
         socket.emit(PERFORM, {
           interface: 'bash',
-          name: 'spawn',
+          method: 'spawn',
           params: [
             'ls', [ '-la' ], {}
           ]
