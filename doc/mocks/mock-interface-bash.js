@@ -5,6 +5,21 @@ const childProcess = require('child_process')
 
 module.exports = function mockInterfaceBash () {
   return {
+    $spec: {
+      name: 'mock-bash',
+      version: '1.0.0',
+      desc: 'Bash interface',
+      methods: {
+        spawn: {
+          desc: 'Spawn a command',
+          params: [
+            { name: 'cmd', type: 'string', desc: 'Command to spawn' },
+            { name: 'args', type: 'array', desc: 'Command arguments' },
+            { name: 'options', type: 'Object', desc: 'Optional settings' }
+          ]
+        }
+      }
+    },
     spawn (ctx) {
       let { params, pipe } = ctx
       return co(function * () {
@@ -18,19 +33,6 @@ module.exports = function mockInterfaceBash () {
           spawned.on('close', (code) => resolve(code))
         })
       })
-    },
-    $spec: {
-      $desc: 'Bash interface',
-      $methods: {
-        spawn: {
-          $desc: 'Spawn a command',
-          $params: [
-            { $name: 'cmd', $type: 'string', $desc: 'Command to spawn' },
-            { $name: 'args', $type: 'array', $desc: 'Command arguments' },
-            { $name: 'options', $type: 'Object', $desc: 'Optional settings' }
-          ]
-        }
-      }
     }
   }
 }
