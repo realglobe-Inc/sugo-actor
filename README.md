@@ -46,7 +46,7 @@ Thing edge module
 <a name="overview"></a>
 
 
-SUGO-Spot is a local server which works as a client of SUGO-Cloud and forward commands to edge components on internal network. 
+SUGO-Spot is a local server which works as a client of [SUGO-Cloud][sugo_cloud_url] and forward commands to edge components on internal network. 
   
 
 <!-- Overview End -->
@@ -74,8 +74,8 @@ Requirements
        style="height:40px"
   /></a>
 
-+ [Node.js ( >=6 )][node_download_url]
-+ [npm ( >=3 )][npm_url]
++ [Node.js ( >=6.x )][node_download_url]
++ [npm ( >=3.x )][npm_url]
 
 [node_download_url]: https://nodejs.org/en/download/
 [npm_url]: https://docs.npmjs.com/
@@ -154,8 +154,12 @@ This software is released under the [Apache-2.0 License](https://github.com/real
 Links
 ------
 
-+ [sugos](https://github.com/realglobe-Inc/sugos)
-+ [sugo-cloud](https://github.com/realglobe-Inc/sugo-cloud)
-+ [sugo-terminal](https://github.com/realglobe-Inc/sugo-terminal)
++ [sugos][sugos_url]
++ [sugo-cloud][sugo_cloud_url]
++ [sugo-terminal][sugo_terminal_url]
+
+[sugos_url]: https://github.com/realglobe-Inc/sugos
+[sugo_cloud_url]: https://github.com/realglobe-Inc/sugo-cloud
+[sugo_terminal_url]: https://github.com/realglobe-Inc/sugo-terminal
 
 <!-- Links End -->
