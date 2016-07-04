@@ -7,7 +7,7 @@
 const SugoSpot = require('../lib/sugo_spot.js')
 const sgSocket = require('sg-socket')
 const assert = require('assert')
-const apemansleep = require('apemansleep')
+const asleep = require('asleep')
 const co = require('co')
 
 const { GreetingEvents, RemoteEvents, AcknowledgeStatus } = require('sg-socket-constants')
@@ -17,7 +17,6 @@ const { OK, NG } = AcknowledgeStatus
 const { SPEC, PERFORM, PIPE } = RemoteEvents
 
 describe('sugo-spot', () => {
-  let sleep = apemansleep.create({})
   let port = 9872
   let server
   let sockets = {}
@@ -40,7 +39,7 @@ describe('sugo-spot', () => {
   }))
 
   after(() => co(function * () {
-    yield sleep.sleep(200)
+    yield asleep(200)
     server.close()
   }))
 
@@ -54,7 +53,7 @@ describe('sugo-spot', () => {
     })
 
     yield spot.connect()
-    yield sleep.sleep(10)
+    yield asleep(10)
 
     for (let id of Object.keys(sockets)) {
       let socket = sockets[ id ]
@@ -72,10 +71,10 @@ describe('sugo-spot', () => {
           ]
         }, (res) => resolve())
       )
-      yield sleep.sleep(10)
+      yield asleep(10)
       assert.ok(piped)
     }
-    yield sleep.sleep(100)
+    yield asleep(100)
     yield spot.disconnect()
   }))
 })
