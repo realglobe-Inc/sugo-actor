@@ -32,6 +32,15 @@ describe('spot-interface', () => {
     })
     assert.equal(exitCode, 0)
   }))
+
+  it('Normalize config', () => co(function * () {
+    let config = SpotInterface.normalize({
+      foo () {
+        return 'bar'
+      }
+    })
+    assert.ok(config.$spec.methods.foo)
+  }))
 })
 
 /* global describe, before, after, it */
