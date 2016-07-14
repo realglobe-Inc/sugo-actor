@@ -120,7 +120,16 @@ co(function * () {
   let spot = sugoSpot(CLOUD_URL, {
     key: 'my-spot-01',
     interfaces: {
-      // Add plugin to provide shell interface
+      // Declare custom function
+      ping (ctx) {
+        let { params } = ctx
+        let [ pong ] = params // Parameters passed from remote terminal
+        return co(function * () {
+          /* ... */
+          return pong // Return value to pass remote terminal
+        })
+      },
+      // Use interface plugin module
       shell: require('sugo-interface-shell')({})
     }
   })
@@ -133,6 +142,71 @@ co(function * () {
 
 
 <!-- Section from "doc/guides/02.Usage.md.hbs" End -->
+
+<!-- Section from "doc/guides/03.Advanced Usage.md.hbs" Start -->
+
+<a name="section-doc-guides-03-advanced-usage-md"></a>
+Advanced Usage
+---------
+
+```javascript
+#!/usr/bin/env node
+
+'use strict'
+
+const sugoSpot = require('sugo-spot')
+const co = require('co')
+const fs = require('fs')
+
+co(function * () {
+  let spot = sugoSpot('http://my-sugo-cloud.example.com/spots', {
+    key: 'my-spot-01',
+    interfaces: {
+      sample01: {
+        // File watch with event emitter
+        watchFile (ctx) {
+          //  ctx.pipe is an instance of EventEmitter class
+          let { params, pipe } = ctx
+          let [ pattern ] = params
+          return co(function * () {
+            let watcher = fs.watch(pattern, (event, filename) => {
+              // Emit event to remote terminal
+              pipe.on('change', { event, filename })
+            })
+            // Receive event from remote terminal
+            pipe.on('stop', () => {
+              watcher.close()
+            })
+          })
+        },
+        /**
+         * Interface specification.
+         * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/interface_spec.json
+         */
+        $spec: {
+          name: 'sugo-demo-spot-sample',
+          version: '1.0.0',
+          desc: 'An example interface',
+          methods: {
+            watchFile: {
+              params: [
+                { name: 'pattern', desc: 'Glob pattern files to watch' }
+              ]
+            }
+          }
+        }
+      }
+    }
+  })
+
+// Connect to cloud server
+  yield spot.connect()
+}).catch((err) => console.error(err))
+
+```
+
+
+<!-- Section from "doc/guides/03.Advanced Usage.md.hbs" End -->
 
 
 <!-- Sections Start -->
