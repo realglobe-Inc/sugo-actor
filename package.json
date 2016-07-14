@@ -1,7 +1,7 @@
 {
   "name": "sugo-spot",
-  "version": "1.0.18",
-  "description": "Thing edge module",
+  "version": "1.0.19",
+  "description": "SUGOS client who provides function interfaces.",
   "main": "lib",
   "scripts": {
     "test": "./ci/test.js",

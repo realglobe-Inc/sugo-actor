@@ -1,3 +1,3 @@
 
-SUGO-Spot is a local server which works as a client of [SUGO-Cloud][sugo_cloud_url] and forward commands to edge components on internal network. 
+SUGO-Spot is a local server which works as a client of [SUGO-Cloud][sugo_cloud_url] and provides function interfaces for remote terminals.  
   
