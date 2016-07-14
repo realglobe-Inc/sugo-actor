@@ -1,6 +1,6 @@
 {
   "name": "sugo-spot",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "SUGOS client who provides function interfaces.",
   "main": "lib",
   "scripts": {
