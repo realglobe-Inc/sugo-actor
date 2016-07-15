@@ -1,6 +1,6 @@
 {
   "name": "sugo-actor",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Actor component of SUGOS.",
   "main": "lib",
   "browser": "sims/browser",
