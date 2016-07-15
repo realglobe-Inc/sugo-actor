@@ -1,7 +1,7 @@
 {
   "name": "sugo-actor",
-  "version": "2.0.2",
-  "description": "Function provider client of SUGOS.",
+  "version": "2.0.3",
+  "description": "Actor component of SUGOS.",
   "main": "lib",
   "scripts": {
     "test": "./ci/test.js",
@@ -10,7 +10,8 @@
   "repository": "realglobe-Inc/sugo-actor",
   "keywords": [
     "SUGOS",
-    "spot"
+    "core",
+    "actor"
   ],
   "author": {
     "name": "Taka Okunishi",
