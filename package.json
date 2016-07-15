@@ -3,9 +3,10 @@
   "version": "2.0.3",
   "description": "Actor component of SUGOS.",
   "main": "lib",
+  "browser": "sims/browser",
   "scripts": {
     "test": "./ci/test.js",
-    "prepublish": "./ci/assets.js && ./ci/build.js"
+    "prepublish": "./ci/assets.js && ./ci/build.js && ./ci/browser.js"
   },
   "repository": "realglobe-Inc/sugo-actor",
   "keywords": [
@@ -34,6 +35,7 @@
     "uuid": "^2.0.2"
   },
   "devDependencies": {
+    "ape-compiling": "^5.0.0",
     "ape-covering": "^3.0.3",
     "ape-formatting": "^1.0.0",
     "ape-releasing": "^4.0.1",
@@ -44,6 +46,7 @@
     "ape-updating": "^4.0.2",
     "coz": "^6.0.3",
     "filecopy": "^2.0.0",
+    "filedel": "^2.0.2",
     "injectmock": "^2.0.0",
     "sg-socket": "^1.0.12",
     "sugos-assets": "^2.0.1"
