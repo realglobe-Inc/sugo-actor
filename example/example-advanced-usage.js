@@ -14,7 +14,7 @@ co(function * () {
         // File watch with event emitter
         watchFile (pattern) {
           const s = this
-          //  ctx.pipe is an instance of EventEmitter class
+          //  "this" is an instance of EventEmitter class
           return co(function * () {
             let watcher = fs.watch(pattern, (event, filename) => {
               // Emit event to remote terminal

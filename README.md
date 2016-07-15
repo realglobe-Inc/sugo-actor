@@ -58,6 +58,7 @@ SUGO-Actor works as a client of [SUGO-Cloud][sugo_cloud_url] and provides module
 <!-- Section from "doc/guides/00.Requirements.md.hbs" Start -->
 
 <a name="section-doc-guides-00-requirements-md"></a>
+
 Requirements
 -----
 
@@ -86,6 +87,7 @@ Requirements
 <!-- Section from "doc/guides/01.Installation.md.hbs" Start -->
 
 <a name="section-doc-guides-01-installation-md"></a>
+
 Installation
 -----
 
@@ -99,6 +101,7 @@ $ npm install sugo-actor --save
 <!-- Section from "doc/guides/02.Usage.md.hbs" Start -->
 
 <a name="section-doc-guides-02-usage-md"></a>
+
 Usage
 ---------
 
@@ -146,6 +149,7 @@ co(function * () {
 <!-- Section from "doc/guides/03.Advanced Usage.md.hbs" Start -->
 
 <a name="section-doc-guides-03-advanced-usage-md"></a>
+
 Advanced Usage
 ---------
 
@@ -168,7 +172,7 @@ co(function * () {
         // File watch with event emitter
         watchFile (pattern) {
           const s = this
-          //  ctx.pipe is an instance of EventEmitter class
+          //  "this" is an instance of EventEmitter class
           return co(function * () {
             let watcher = fs.watch(pattern, (event, filename) => {
               // Emit event to remote terminal
