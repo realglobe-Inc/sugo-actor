@@ -1,10 +1,10 @@
 /**
- * Test case for sugoSpot.
+ * Test case for sugoActor.
  * Runs with mocha.
  */
 'use strict'
 
-const SugoSpot = require('../lib/sugo_spot.js')
+const SugoActor = require('../lib/sugo_actor.js')
 const sgSocket = require('sg-socket')
 const assert = require('assert')
 const asleep = require('asleep')
@@ -16,7 +16,7 @@ const { HI, BYE } = GreetingEvents
 const { OK, NG } = AcknowledgeStatus
 const { SPEC, PERFORM, PIPE } = RemoteEvents
 
-describe('sugo-spot', () => {
+describe('sugo-actor', () => {
   let port = 9872
   let server
   let sockets = {}
@@ -43,12 +43,12 @@ describe('sugo-spot', () => {
     server.close()
   }))
 
-  it('Sugo spot', () => co(function * () {
+  it('Sugo actor', () => co(function * () {
     let url = `http://localhost:${port}/spots`
-    let spot = new SugoSpot(url, {
+    let spot = new SugoActor(url, {
       key: 'hogehoge',
-      interfaces: {
-        bash: require('../doc/mocks/mock-interface-bash')()
+      modules: {
+        bash: require('../misc/mocks/mock-module-bash')()
       }
     })
 
@@ -64,7 +64,7 @@ describe('sugo-spot', () => {
       })
       yield new Promise((resolve, reject) =>
         socket.emit(PERFORM, {
-          interface: 'bash',
+          module: 'bash',
           method: 'spawn',
           params: [
             'ls', [ '-la' ], {}

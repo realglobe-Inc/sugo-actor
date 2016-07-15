@@ -4,11 +4,11 @@
  */
 'use strict'
 
-const spotInterfacePipe = require('../lib/helpers/spot_interface_pipe.js')
+const ActorModulePipe = require('../lib/helpers/actor_module_pipe.js')
 const assert = require('assert')
 const co = require('co')
 
-describe('spot-interface-pipe', () => {
+describe('actor-module-pipe', () => {
   before(() => co(function * () {
 
   }))
@@ -18,7 +18,8 @@ describe('spot-interface-pipe', () => {
   }))
 
   it('Spot interface pipe', () => co(function * () {
-
+    let pipe = new ActorModulePipe()
+    assert.ok(pipe)
   }))
 })
 

@@ -4,11 +4,11 @@
  */
 'use strict'
 
-const SpotInterface = require('../lib/helpers/spot_interface.js')
+const ActorModule = require('../lib/helpers/actor_module.js')
 const assert = require('assert')
 const co = require('co')
 
-describe('spot-interface', () => {
+describe('actor-interface', () => {
   before(() => co(function * () {
 
   }))
@@ -18,8 +18,8 @@ describe('spot-interface', () => {
   }))
 
   it('Spot interface', () => co(function * () {
-    let bash = new SpotInterface(
-      require('../doc/mocks/mock-interface-bash')()
+    let bash = new ActorModule(
+      require('../misc/mocks/mock-module-bash')()
     )
     let exitCode = yield bash.$$invoke('spawn', [
       'ls',
@@ -34,7 +34,7 @@ describe('spot-interface', () => {
   }))
 
   it('Normalize config', () => co(function * () {
-    let config = SpotInterface.normalize({
+    let config = ActorModule.normalize({
       foo () {
         return 'bar'
       }

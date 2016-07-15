@@ -1,14 +1,14 @@
 /**
- * Test case for spotValidator.
+ * Test case for actorValidator.
  * Runs with mocha.
  */
 'use strict'
 
-const spotValidator = require('../lib/helpers/spot_validator.js')
+const ActorValidator = require('../lib/helpers/actor_validator.js')
 const assert = require('assert')
 const co = require('co')
 
-describe('spot-validator', () => {
+describe('actor-validator', () => {
   before(() => co(function * () {
 
   }))
@@ -18,7 +18,8 @@ describe('spot-validator', () => {
   }))
 
   it('Spot validator', () => co(function * () {
-
+    let validator = new ActorValidator()
+    assert.ok(validator)
   }))
 })
 

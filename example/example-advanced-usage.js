@@ -2,13 +2,13 @@
 
 'use strict'
 
-const sugoSpot = require('sugo-spot')
+const sugoActor = require('sugo-actor')
 const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let spot = sugoSpot('http://my-sugo-cloud.example.com/spots', {
-    key: 'my-spot-01',
+  let spot = sugoActor('http://my-sugo-cloud.example.com/spots', {
+    key: 'my-actor-01',
     interfaces: {
       sample01: {
         // File watch with event emitter
@@ -32,7 +32,7 @@ co(function * () {
          * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/interface_spec.json
          */
         $spec: {
-          name: 'sugo-demo-spot-sample',
+          name: 'sugo-demo-actor-sample',
           version: '1.0.0',
           desc: 'An example interface',
           methods: {

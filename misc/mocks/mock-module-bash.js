@@ -3,12 +3,12 @@
 const co = require('co')
 const childProcess = require('child_process')
 
-module.exports = function mockInterfaceBash () {
+module.exports = function mockModuleBash () {
   return {
     $spec: {
       name: 'mock-bash',
       version: '1.0.0',
-      desc: 'Bash interface',
+      desc: 'Bash module',
       methods: {
         spawn: {
           desc: 'Spawn a command',

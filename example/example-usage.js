@@ -6,15 +6,15 @@
 
 'use strict'
 
-const sugoSpot = require('sugo-spot')
+const sugoActor = require('sugo-actor')
 const co = require('co')
 
 const CLOUD_URL = 'http://my-sugo-cloud.example.com/spots'
 
 co(function * () {
-  let spot = sugoSpot(CLOUD_URL, {
-    key: 'my-spot-01',
-    interfaces: {
+  let spot = sugoActor(CLOUD_URL, {
+    key: 'my-actor-01',
+    modules: {
       // Declare custom function
       ping (ctx) {
         let { params } = ctx
@@ -24,8 +24,8 @@ co(function * () {
           return pong // Return value to pass remote terminal
         })
       },
-      // Use interface plugin module
-      shell: require('sugo-interface-shell')({})
+      // Use module plugin
+      shell: require('sugo-module-shell')({})
     }
   })
 

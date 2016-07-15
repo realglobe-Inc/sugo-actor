@@ -5,14 +5,14 @@
 
 'use strict'
 
-const SugoSpot = require('./sugo_spot')
+const SugoActor = require('./sugo_actor')
 const create = require('./create')
 
 let lib = create.bind(this)
 
-Object.assign(lib, SugoSpot, {
+Object.assign(lib, SugoActor, {
   create,
-  SugoSpot
+  SugoActor
 })
 
 module.exports = lib
