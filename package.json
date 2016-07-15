@@ -1,6 +1,6 @@
 {
   "name": "sugo-actor",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Function provider client of SUGOS.",
   "main": "lib",
   "scripts": {
