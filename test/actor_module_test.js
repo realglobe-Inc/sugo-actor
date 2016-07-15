@@ -17,19 +17,20 @@ describe('actor-interface', () => {
 
   }))
 
-  it('Spot interface', () => co(function * () {
+  it('Module interface', () => co(function * () {
     let bash = new ActorModule(
       require('../misc/mocks/mock-module-bash')()
     )
-    let exitCode = yield bash.$$invoke('spawn', [
-      'ls',
-      [ '-la', '.' ]
-    ], {
+    bash.$$pipe({
       emit (ev, data) {
         console.log(ev, String(data))
       },
       on () {}
     })
+    let exitCode = yield bash.$$invoke('spawn', [
+      'ls',
+      [ '-la', '.' ]
+    ])
     assert.equal(exitCode, 0)
   }))
 

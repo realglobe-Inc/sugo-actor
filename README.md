@@ -120,14 +120,14 @@ co(function * () {
   let actor = sugoActor(CLOUD_URL, {
     key: 'my-actor-01',
     modules: {
-      // Declare custom function
-      ping (ctx) {
-        let { params } = ctx
-        let [ pong ] = params // Parameters passed from caller
-        return co(function * () {
-          /* ... */
-          return pong // Return value to pass caller
-        })
+      tableTennis: {
+        // Declare custom function
+        ping (pong) {
+          return co(function * () {
+            /* ... */
+            return pong // Return value to pass caller
+          })
+        }
       },
       // Use module plugin
       shell: require('sugo-module-shell')({})
@@ -166,17 +166,16 @@ co(function * () {
     modules: {
       sample01: {
         // File watch with event emitter
-        watchFile (ctx) {
+        watchFile (pattern) {
+          const s = this
           //  ctx.pipe is an instance of EventEmitter class
-          let { params, pipe } = ctx
-          let [ pattern ] = params
           return co(function * () {
             let watcher = fs.watch(pattern, (event, filename) => {
               // Emit event to remote terminal
-              pipe.on('change', { event, filename })
+              s.on('change', { event, filename })
             })
             // Receive event from remote terminal
-            pipe.on('stop', () => {
+            s.on('stop', () => {
               watcher.close()
             })
           })

@@ -22,7 +22,7 @@ describe('sugo-actor', () => {
   let sockets = {}
   before(() => co(function * () {
     server = sgSocket(port)
-    server.of('/spots').on('connection', (socket) => {
+    server.of('/actors').on('connection', (socket) => {
       socket.on(HI, (data, callback) => {
         callback({ status: OK, payload: { key: data.key } })
       })
@@ -44,15 +44,15 @@ describe('sugo-actor', () => {
   }))
 
   it('Sugo actor', () => co(function * () {
-    let url = `http://localhost:${port}/spots`
-    let spot = new SugoActor(url, {
+    let url = `http://localhost:${port}/actors`
+    let actor = new SugoActor(url, {
       key: 'hogehoge',
       modules: {
         bash: require('../misc/mocks/mock-module-bash')()
       }
     })
 
-    yield spot.connect()
+    yield actor.connect()
     yield asleep(10)
 
     for (let id of Object.keys(sockets)) {
@@ -75,7 +75,7 @@ describe('sugo-actor', () => {
       assert.ok(piped)
     }
     yield asleep(100)
-    yield spot.disconnect()
+    yield actor.disconnect()
   }))
 })
 

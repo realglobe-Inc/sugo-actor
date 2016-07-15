@@ -20,15 +20,14 @@ module.exports = function mockModuleBash () {
         }
       }
     },
-    spawn (ctx) {
-      let { params, pipe } = ctx
+    spawn (cmd, args, options) {
+      const s = this
       return co(function * () {
         return yield new Promise((resolve, reject) => {
-          let [ cmd, args, options ] = params
           let spawned = childProcess.spawn(cmd, args, options)
-          spawned.stdout.on('data', (data) => pipe.emit('stdout', data))
-          spawned.stderr.on('data', (data) => pipe.emit('stderr', data))
-          pipe.on('stdin', (data) => spawned.stdin.write(data))
+          spawned.stdout.on('data', (data) => s.emit('stdout', data))
+          spawned.stderr.on('data', (data) => s.emit('stderr', data))
+          s.on('stdin', (data) => spawned.stdin.write(data))
           spawned.on('error', (err) => reject(err))
           spawned.on('close', (code) => resolve(code))
         })

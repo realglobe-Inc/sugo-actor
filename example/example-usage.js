@@ -15,14 +15,14 @@ co(function * () {
   let actor = sugoActor(CLOUD_URL, {
     key: 'my-actor-01',
     modules: {
-      // Declare custom function
-      ping (ctx) {
-        let { params } = ctx
-        let [ pong ] = params // Parameters passed from caller
-        return co(function * () {
-          /* ... */
-          return pong // Return value to pass caller
-        })
+      tableTennis: {
+        // Declare custom function
+        ping (pong) {
+          return co(function * () {
+            /* ... */
+            return pong // Return value to pass caller
+          })
+        }
       },
       // Use module plugin
       shell: require('sugo-module-shell')({})
