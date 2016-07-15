@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * This is an example to run local spot server
+ * This is an example to run actor
  */
 
 'use strict'
@@ -9,19 +9,19 @@
 const sugoActor = require('sugo-actor')
 const co = require('co')
 
-const CLOUD_URL = 'http://my-sugo-cloud.example.com/spots'
+const CLOUD_URL = 'http://my-sugo-cloud.example.com/actors'
 
 co(function * () {
-  let spot = sugoActor(CLOUD_URL, {
+  let actor = sugoActor(CLOUD_URL, {
     key: 'my-actor-01',
     modules: {
       // Declare custom function
       ping (ctx) {
         let { params } = ctx
-        let [ pong ] = params // Parameters passed from remote terminal
+        let [ pong ] = params // Parameters passed from caller
         return co(function * () {
           /* ... */
-          return pong // Return value to pass remote terminal
+          return pong // Return value to pass caller
         })
       },
       // Use module plugin
@@ -30,5 +30,5 @@ co(function * () {
   })
 
 // Connect to cloud server
-  yield spot.connect()
+  yield actor.connect()
 }).catch((err) => console.error(err))

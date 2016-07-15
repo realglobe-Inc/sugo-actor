@@ -7,9 +7,9 @@ const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let spot = sugoActor('http://my-sugo-cloud.example.com/spots', {
+  let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
     key: 'my-actor-01',
-    interfaces: {
+    modules: {
       sample01: {
         // File watch with event emitter
         watchFile (ctx) {
@@ -28,13 +28,13 @@ co(function * () {
           })
         },
         /**
-         * Interface specification.
-         * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/interface_spec.json
+         * Module specification.
+         * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
          */
         $spec: {
           name: 'sugo-demo-actor-sample',
           version: '1.0.0',
-          desc: 'An example interface',
+          desc: 'An example method',
           methods: {
             watchFile: {
               params: [
@@ -48,5 +48,5 @@ co(function * () {
   })
 
 // Connect to cloud server
-  yield spot.connect()
+  yield actor.connect()
 }).catch((err) => console.error(err))

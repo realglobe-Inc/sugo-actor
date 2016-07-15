@@ -104,7 +104,7 @@ Usage
 #!/usr/bin/env node
 
 /**
- * This is an example to run local spot server
+ * This is an example to run actor
  */
 
 'use strict'
@@ -112,19 +112,19 @@ Usage
 const sugoActor = require('sugo-actor')
 const co = require('co')
 
-const CLOUD_URL = 'http://my-sugo-cloud.example.com/spots'
+const CLOUD_URL = 'http://my-sugo-cloud.example.com/actors'
 
 co(function * () {
-  let spot = sugoActor(CLOUD_URL, {
+  let actor = sugoActor(CLOUD_URL, {
     key: 'my-actor-01',
     modules: {
       // Declare custom function
       ping (ctx) {
         let { params } = ctx
-        let [ pong ] = params // Parameters passed from remote terminal
+        let [ pong ] = params // Parameters passed from caller
         return co(function * () {
           /* ... */
-          return pong // Return value to pass remote terminal
+          return pong // Return value to pass caller
         })
       },
       // Use module plugin
@@ -133,7 +133,7 @@ co(function * () {
   })
 
 // Connect to cloud server
-  yield spot.connect()
+  yield actor.connect()
 }).catch((err) => console.error(err))
 
 ```
@@ -159,9 +159,9 @@ const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let spot = sugoActor('http://my-sugo-cloud.example.com/spots', {
+  let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
     key: 'my-actor-01',
-    interfaces: {
+    modules: {
       sample01: {
         // File watch with event emitter
         watchFile (ctx) {
@@ -180,13 +180,13 @@ co(function * () {
           })
         },
         /**
-         * Interface specification.
-         * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/interface_spec.json
+         * Module specification.
+         * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
          */
         $spec: {
           name: 'sugo-demo-actor-sample',
           version: '1.0.0',
-          desc: 'An example interface',
+          desc: 'An example method',
           methods: {
             watchFile: {
               params: [
@@ -200,7 +200,7 @@ co(function * () {
   })
 
 // Connect to cloud server
-  yield spot.connect()
+  yield actor.connect()
 }).catch((err) => console.error(err))
 
 ```
