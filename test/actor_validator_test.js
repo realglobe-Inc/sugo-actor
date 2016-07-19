@@ -4,7 +4,7 @@
  */
 'use strict'
 
-const ActorValidator = require('../lib/helpers/actor_validator.js')
+const ActorValidator = require('../lib/validating/actor_validator.js')
 const assert = require('assert')
 const co = require('co')
 

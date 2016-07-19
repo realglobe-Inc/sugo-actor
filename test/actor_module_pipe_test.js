@@ -4,7 +4,7 @@
  */
 'use strict'
 
-const ActorModulePipe = require('../lib/helpers/actor_module_pipe.js')
+const ActorModulePipe = require('../lib/module/actor_module_pipe.js')
 const assert = require('assert')
 const co = require('co')
 

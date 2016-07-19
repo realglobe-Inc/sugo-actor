@@ -4,7 +4,7 @@
  */
 'use strict'
 
-const ActorModule = require('../lib/helpers/actor_module.js')
+const ActorModule = require('../lib/module/actor_module.js')
 const assert = require('assert')
 const co = require('co')
 
