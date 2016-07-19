@@ -18,10 +18,10 @@ describe('create', () => {
   }))
 
   it('Create', () => co(function * () {
-    let spot = create('http://example.com', {
+    let instance = create('http://example.com', {
       key: 'foo'
     })
-    assert.ok(spot)
+    assert.ok(instance)
   }))
 })
 

@@ -1,5 +1,5 @@
 /**
- * Test case for spotInterface.
+ * Test case for ActorModule.
  * Runs with mocha.
  */
 'use strict'

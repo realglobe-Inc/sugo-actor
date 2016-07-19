@@ -1,5 +1,5 @@
 /**
- * Test case for spotInterfacePipe.
+ * Test case for ActorModulePipe.
  * Runs with mocha.
  */
 'use strict'
