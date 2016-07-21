@@ -18,7 +18,7 @@ co(function * () {
           return co(function * () {
             let watcher = fs.watch(pattern, (event, filename) => {
               // Emit event to remote terminal
-              s.on('change', { event, filename })
+              s.emit('change', { event, filename })
             })
             // Receive event from remote terminal
             s.on('stop', () => {
@@ -30,22 +30,7 @@ co(function * () {
          * Module specification.
          * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
          */
-        $spec: {
-          name: 'sugo-demo-actor-sample',
-          version: '1.0.0',
-          desc: 'An example method',
-          methods: {
-            watchFile: {
-              params: [
-                { name: 'pattern', desc: 'Glob pattern files to watch' }
-              ]
-            }
-          }
-        }
-      },
-      // Module it self could be a function
-      sample02 (foge) {
-        return 'fuge'
+        $spec: { /* ... */ }
       }
     }
   })

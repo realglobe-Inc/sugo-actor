@@ -109,7 +109,7 @@ Usage
 #!/usr/bin/env node
 
 /**
- * This is an example to run actor
+ * This is an example to use actors
  */
 
 'use strict'
@@ -153,9 +153,10 @@ co(function * () {
 Advanced Usage
 ---------
 
-+ Modules may have event emitting/listening so that you can implement none call-return functionality like file watching
-+ You can describe module with `$spec` property
-+ A module could be a single function
+### Using EventEmitter Interface
+
+The `this` inside module methods is instance of EventEmitter class.
+You can use `.on()`, `.off()`, `.emit()` methods to communicate with remote callers.
 
 ```javascript
 #!/usr/bin/env node
@@ -178,7 +179,7 @@ co(function * () {
           return co(function * () {
             let watcher = fs.watch(pattern, (event, filename) => {
               // Emit event to remote terminal
-              s.on('change', { event, filename })
+              s.emit('change', { event, filename })
             })
             // Receive event from remote terminal
             s.on('stop', () => {
@@ -190,22 +191,7 @@ co(function * () {
          * Module specification.
          * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
          */
-        $spec: {
-          name: 'sugo-demo-actor-sample',
-          version: '1.0.0',
-          desc: 'An example method',
-          methods: {
-            watchFile: {
-              params: [
-                { name: 'pattern', desc: 'Glob pattern files to watch' }
-              ]
-            }
-          }
-        }
-      },
-      // Module it self could be a function
-      sample02 (foge) {
-        return 'fuge'
+        $spec: { /* ... */ }
       }
     }
   })
@@ -215,6 +201,104 @@ co(function * () {
 }).catch((err) => console.error(err))
 
 ```
+
+
+### Description with `$spec`
+
+You can describe a module with `$spec` property.
+The spec object must conform to [Module Spec JSON-Schema][spec_schema_url]
+
+```javascript
+#!/usr/bin/env node
+
+'use strict'
+
+const sugoActor = require('sugo-actor')
+const co = require('co')
+const fs = require('fs')
+
+co(function * () {
+  let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
+    key: 'my-actor-01',
+    modules: {
+      sample01: {
+        // File watch with event emitter
+        watchFile (pattern) { /* ... */ },
+        /**
+         * Module specification.
+         * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
+         */
+        $spec: {
+          name: 'sugo-demo-actor-sample',
+          version: '1.0.0',
+          desc: 'A sample module',
+          methods: {
+            watchFile: {
+              params: [
+                { name: 'pattern', desc: 'Glob pattern files to watch' }
+              ]
+            }
+          }
+        }
+      }
+    }
+  })
+
+// Connect to cloud server
+  yield actor.connect()
+}).catch((err) => console.error(err))
+
+```
+
+
+### Declare a single function as module
+
+Sometimes you do not want multiple module methods, but only one function.
+Just declaring a function as module would do this.
+
+```javascript
+#!/usr/bin/env node
+
+'use strict'
+
+const sugoActor = require('sugo-actor')
+const co = require('co')
+const fs = require('fs')
+
+co(function * () {
+  let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
+    key: 'my-actor-01',
+    modules: {
+      sample01: {
+        // File watch with event emitter
+        watchFile (pattern) { /* ... */ },
+        /**
+         * Module specification.
+         * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
+         */
+        $spec: {
+          name: 'sugo-demo-actor-sample',
+          version: '1.0.0',
+          desc: 'A sample module',
+          methods: {
+            watchFile: {
+              params: [
+                { name: 'pattern', desc: 'Glob pattern files to watch' }
+              ]
+            }
+          }
+        }
+      }
+    }
+  })
+
+// Connect to cloud server
+  yield actor.connect()
+}).catch((err) => console.error(err))
+
+```
+
+[spec_schema_url]: https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
 
 
 <!-- Section from "doc/guides/03.Advanced Usage.md.hbs" End -->

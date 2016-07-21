@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * This is an example to run actor
+ * This is an example to run an actor
  */
 
 'use strict'
