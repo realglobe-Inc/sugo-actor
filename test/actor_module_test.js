@@ -42,6 +42,13 @@ describe('actor-interface', () => {
     })
     assert.ok(config.$spec.methods.foo)
   }))
+
+  it('Normalize config with default', () => co(function * () {
+    let config = ActorModule.normalize(function foo () {
+      return 'bar'
+    })
+    assert.ok(config.$spec.methods.default)
+  }))
 })
 
 /* global describe, before, after, it */
