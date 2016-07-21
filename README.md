@@ -153,7 +153,9 @@ co(function * () {
 Advanced Usage
 ---------
 
-Interfaces may have event emitting/listening so that you can implement none call-return functionality like file watching
++ Modules may have event emitting/listening so that you can implement none call-return functionality like file watching
++ You can describe module with `$spec` property
++ A module could be a single function
 
 ```javascript
 #!/usr/bin/env node
@@ -200,6 +202,10 @@ co(function * () {
             }
           }
         }
+      },
+      // Module it self could be a function
+      sample02 (foge) {
+        return 'fuge'
       }
     }
   })

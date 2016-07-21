@@ -42,6 +42,10 @@ co(function * () {
             }
           }
         }
+      },
+      // Module it self could be a function
+      sample02 (foge) {
+        return 'fuge'
       }
     }
   })
