@@ -14,7 +14,7 @@ You can use `.on()`, `.off()`, `.emit()` methods to communicate with remote call
 ### Description with `$spec`
 
 You can describe a module with `$spec` property.
-The spec object must conform to [Module Spec JSON-Schema][spec_schema_url]
+The spec object must conform to [module_spec.json][spec_schema_url], a JSON-Schema.
 
 ```javascript
 {{{read 'example/example-advanced-specs.js'}}}
@@ -27,7 +27,7 @@ Sometimes you do not want multiple module methods, but only one function.
 Just declaring a function as module would do this.
 
 ```javascript
-{{{read 'example/example-advanced-specs.js'}}}
+{{{read 'example/example-advanced-func.js'}}}
 ```
 
 [spec_schema_url]: https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json

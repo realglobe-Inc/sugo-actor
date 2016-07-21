@@ -11,7 +11,6 @@ co(function * () {
     key: 'my-actor-01',
     modules: {
       sample01: {
-        // File watch with event emitter
         watchFile (pattern) { /* ... */ },
         /**
          * Module specification.

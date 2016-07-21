@@ -109,7 +109,7 @@ Usage
 #!/usr/bin/env node
 
 /**
- * This is an example to use actors
+ * This is an example to run an actor
  */
 
 'use strict'
@@ -206,7 +206,7 @@ co(function * () {
 ### Description with `$spec`
 
 You can describe a module with `$spec` property.
-The spec object must conform to [Module Spec JSON-Schema][spec_schema_url]
+The spec object must conform to [module_spec.json][spec_schema_url], a JSON-Schema.
 
 ```javascript
 #!/usr/bin/env node
@@ -222,7 +222,6 @@ co(function * () {
     key: 'my-actor-01',
     modules: {
       sample01: {
-        // File watch with event emitter
         watchFile (pattern) { /* ... */ },
         /**
          * Module specification.
@@ -269,25 +268,13 @@ co(function * () {
   let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
     key: 'my-actor-01',
     modules: {
-      sample01: {
-        // File watch with event emitter
-        watchFile (pattern) { /* ... */ },
-        /**
-         * Module specification.
-         * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
-         */
-        $spec: {
-          name: 'sugo-demo-actor-sample',
-          version: '1.0.0',
-          desc: 'A sample module',
-          methods: {
-            watchFile: {
-              params: [
-                { name: 'pattern', desc: 'Glob pattern files to watch' }
-              ]
-            }
-          }
-        }
+      sample01: { /* ... */ },
+      // A function as module
+      sample02 (foo) {
+        return co(function * () {
+          /* ... */
+          return 'say yo!'
+        })
       }
     }
   })
