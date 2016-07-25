@@ -3,6 +3,7 @@
 'use strict'
 
 const sugoActor = require('sugo-actor')
+const { Module } = sugoActor
 const co = require('co')
 const fs = require('fs')
 
@@ -10,11 +11,11 @@ co(function * () {
   let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
     key: 'my-actor-01',
     modules: {
-      sample01: {
+      sample01: new Module({
         // File watch with event emitter
         watchFile (pattern) {
           const s = this
-          //  "this" is an instance of EventEmitter class
+          //  "this" is has interface of EventEmitter class
           return co(function * () {
             let watcher = fs.watch(pattern, (event, filename) => {
               // Emit event to remote terminal
@@ -31,7 +32,7 @@ co(function * () {
          * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
          */
         $spec: { /* ... */ }
-      }
+      })
     }
   })
 

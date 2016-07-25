@@ -1,18 +1,22 @@
 /**
  * {{pkg.description}}
  * @module {{pkg.name}}
+ * @version {{pkg.version}}
+ * @license {{pkg.license}}
  */
 
 'use strict'
 
 const SugoActor = require('./sugo_actor')
+const Module = require('./module')
 const create = require('./create')
 
 let lib = create.bind(this)
 
 Object.assign(lib, SugoActor, {
   create,
-  SugoActor
+  SugoActor,
+  Module
 })
 
 module.exports = lib

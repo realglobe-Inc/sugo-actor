@@ -115,6 +115,7 @@ Usage
 'use strict'
 
 const sugoActor = require('sugo-actor')
+const { Module } = sugoActor
 const co = require('co')
 
 const CLOUD_URL = 'http://my-sugo-cloud.example.com/actors'
@@ -123,7 +124,7 @@ co(function * () {
   let actor = sugoActor(CLOUD_URL, {
     key: 'my-actor-01',
     modules: {
-      tableTennis: {
+      tableTennis: new Module({
         // Declare custom function
         ping (pong) {
           return co(function * () {
@@ -131,7 +132,7 @@ co(function * () {
             return pong // Return value to pass caller
           })
         }
-      },
+      }),
       // Use module plugin
       shell: require('sugo-module-shell')({})
     }
@@ -164,6 +165,7 @@ You can use `.on()`, `.off()`, `.emit()` methods to communicate with remote call
 'use strict'
 
 const sugoActor = require('sugo-actor')
+const { Module } = sugoActor
 const co = require('co')
 const fs = require('fs')
 
@@ -171,11 +173,11 @@ co(function * () {
   let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
     key: 'my-actor-01',
     modules: {
-      sample01: {
+      sample01: new Module({
         // File watch with event emitter
         watchFile (pattern) {
           const s = this
-          //  "this" is an instance of EventEmitter class
+          //  "this" is has interface of EventEmitter class
           return co(function * () {
             let watcher = fs.watch(pattern, (event, filename) => {
               // Emit event to remote terminal
@@ -192,7 +194,7 @@ co(function * () {
          * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
          */
         $spec: { /* ... */ }
-      }
+      })
     }
   })
 
@@ -214,6 +216,7 @@ The spec object must conform to [module_spec.json][spec_schema_url], a JSON-Sche
 'use strict'
 
 const sugoActor = require('sugo-actor')
+const { Module } = sugoActor
 const co = require('co')
 const fs = require('fs')
 
@@ -221,7 +224,7 @@ co(function * () {
   let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
     key: 'my-actor-01',
     modules: {
-      sample01: {
+      sample01: new Module({
         watchFile (pattern) { /* ... */ },
         /**
          * Module specification.
@@ -239,7 +242,7 @@ co(function * () {
             }
           }
         }
-      }
+      })
     }
   })
 
@@ -261,6 +264,7 @@ Just declaring a function as module would do this.
 'use strict'
 
 const sugoActor = require('sugo-actor')
+const { Module } = sugoActor
 const co = require('co')
 const fs = require('fs')
 
@@ -268,14 +272,14 @@ co(function * () {
   let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
     key: 'my-actor-01',
     modules: {
-      sample01: { /* ... */ },
+      sample01: new Module({ /* ... */ }),
       // A function as module
-      sample02 (foo) {
+      sample02: new Module((foo) => {
         return co(function * () {
           /* ... */
           return 'say yo!'
         })
-      }
+      })
     }
   })
 

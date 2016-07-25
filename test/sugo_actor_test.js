@@ -6,6 +6,7 @@
 
 const SugoActor = require('../lib/sugo_actor.js')
 const sgSocket = require('sg-socket')
+const Module = require('../module')
 const assert = require('assert')
 const asleep = require('asleep')
 const co = require('co')
@@ -48,7 +49,12 @@ describe('sugo-actor', () => {
     let actor = new SugoActor(url, {
       key: 'hogehoge',
       modules: {
-        bash: require('../misc/mocks/mock-module-bash')()
+        bash: require('../misc/mocks/mock-module-bash')(),
+        hoge: new Module({
+          hoge () {
+            return 'This is hoge!'
+          }
+        })
       }
     })
 
@@ -75,6 +81,7 @@ describe('sugo-actor', () => {
       assert.ok(piped)
     }
     yield asleep(100)
+
     yield actor.disconnect()
   }))
 })
