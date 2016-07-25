@@ -17,15 +17,17 @@ co(function * () {
          * Module specification.
          * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
          */
-        $spec: {
-          name: 'sugo-demo-actor-sample',
-          version: '1.0.0',
-          desc: 'A sample module',
-          methods: {
-            watchFile: {
-              params: [
-                { name: 'pattern', desc: 'Glob pattern files to watch' }
-              ]
+        get $spec() {
+          return {
+            name: 'sugo-demo-actor-sample',
+            version: '1.0.0',
+            desc: 'A sample module',
+            methods: {
+              watchFile: {
+                params: [
+                  { name: 'pattern', desc: 'Glob pattern files to watch' }
+                ]
+              }
             }
           }
         }
