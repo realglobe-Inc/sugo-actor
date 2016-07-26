@@ -55,9 +55,29 @@ SUGO-Actor works as a client of [SUGO-Cloud][sugo_cloud_url] and provides module
 <!-- Sections Start -->
 <a name="sections"></a>
 
-<!-- Section from "doc/guides/00.Requirements.md.hbs" Start -->
+<!-- Section from "doc/guides/00.TOC.md.hbs" Start -->
 
-<a name="section-doc-guides-00-requirements-md"></a>
+<a name="section-doc-guides-00-t-o-c-md"></a>
+
+Table of Contents
+----------------
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Advanced Usage](#advanced-usage)
+  * [Using EventEmitter Interface](#using-eventemitter-interface)
+  * [Description with `$spec`](#description-with-spec)
+  * [Declare a single function as module](#declare-a-single-function-as-module)
+- [License](#license)
+- [Links](#links)
+
+
+<!-- Section from "doc/guides/00.TOC.md.hbs" End -->
+
+<!-- Section from "doc/guides/10.Requirements.md.hbs" Start -->
+
+<a name="section-doc-guides-10-requirements-md"></a>
 
 Requirements
 -----
@@ -82,11 +102,11 @@ Requirements
 [npm_url]: https://docs.npmjs.com/
 
 
-<!-- Section from "doc/guides/00.Requirements.md.hbs" End -->
+<!-- Section from "doc/guides/10.Requirements.md.hbs" End -->
 
-<!-- Section from "doc/guides/01.Installation.md.hbs" Start -->
+<!-- Section from "doc/guides/21.Installation.md.hbs" Start -->
 
-<a name="section-doc-guides-01-installation-md"></a>
+<a name="section-doc-guides-21-installation-md"></a>
 
 Installation
 -----
@@ -96,20 +116,22 @@ $ npm install sugo-actor --save
 ```
 
 
-<!-- Section from "doc/guides/01.Installation.md.hbs" End -->
+<!-- Section from "doc/guides/21.Installation.md.hbs" End -->
 
-<!-- Section from "doc/guides/02.Usage.md.hbs" Start -->
+<!-- Section from "doc/guides/22.Usage.md.hbs" Start -->
 
-<a name="section-doc-guides-02-usage-md"></a>
+<a name="section-doc-guides-22-usage-md"></a>
 
 Usage
 ---------
 
+ Create an actor class and connect it to a [SUGO-Cloud][sugo_cloud_url] cloud server.
+ 
 ```javascript
 #!/usr/bin/env node
 
 /**
- * This is an example to run an actor
+ * This is an example to use an actor
  */
 
 'use strict'
@@ -122,7 +144,9 @@ const CLOUD_URL = 'http://my-sugo-cloud.example.com/actors'
 
 co(function * () {
   let actor = sugoActor(CLOUD_URL, {
+    /** Key to identify the actor */
     key: 'my-actor-01',
+    /** Modules to load */
     modules: {
       tableTennis: new Module({
         // Declare custom function
@@ -145,23 +169,25 @@ co(function * () {
 ```
 
 
-<!-- Section from "doc/guides/02.Usage.md.hbs" End -->
+<!-- Section from "doc/guides/22.Usage.md.hbs" End -->
 
-<!-- Section from "doc/guides/03.Advanced Usage.md.hbs" Start -->
+<!-- Section from "doc/guides/23.Advanced Usage.md.hbs" Start -->
 
-<a name="section-doc-guides-03-advanced-usage-md"></a>
+<a name="section-doc-guides-23-advanced-usage-md"></a>
 
 Advanced Usage
 ---------
 
 ### Using EventEmitter Interface
 
-The `this` inside module methods is instance of EventEmitter class.
-You can use `.on()`, `.off()`, `.emit()` methods to communicate with remote callers.
+The [Module class](https://github.com/realglobe-Inc/sugo-module-base) provide EventEmitter interface like `.on()`, `.off()`, `.emit()` to communicate with remote callers.
 
 ```javascript
 #!/usr/bin/env node
 
+/**
+ * This is an example for use event interface
+ */
 'use strict'
 
 const sugoActor = require('sugo-actor')
@@ -184,9 +210,7 @@ co(function * () {
               s.emit('change', { event, filename })
             })
             // Receive event from remote terminal
-            s.on('stop', () => {
-              watcher.close()
-            })
+            s.on('stop', () => watcher.close())
           })
         },
         /**
@@ -213,6 +237,11 @@ The spec object must conform to [module_spec.json][spec_schema_url], a JSON-Sche
 ```javascript
 #!/usr/bin/env node
 
+/**
+ * This is an example to define spec on module
+ *
+ * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
+ */
 'use strict'
 
 const sugoActor = require('sugo-actor')
@@ -230,15 +259,17 @@ co(function * () {
          * Module specification.
          * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
          */
-        $spec: {
-          name: 'sugo-demo-actor-sample',
-          version: '1.0.0',
-          desc: 'A sample module',
-          methods: {
-            watchFile: {
-              params: [
-                { name: 'pattern', desc: 'Glob pattern files to watch' }
-              ]
+        get $spec () {
+          return {
+            name: 'sugo-demo-actor-sample',
+            version: '1.0.0',
+            desc: 'A sample module',
+            methods: {
+              watchFile: {
+                params: [
+                  { name: 'pattern', desc: 'Glob pattern files to watch' }
+                ]
+              }
             }
           }
         }
@@ -261,6 +292,9 @@ Just declaring a function as module would do this.
 ```javascript
 #!/usr/bin/env node
 
+/**
+ * This is an example to use a function module
+ */
 'use strict'
 
 const sugoActor = require('sugo-actor')
@@ -292,7 +326,7 @@ co(function * () {
 [spec_schema_url]: https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
 
 
-<!-- Section from "doc/guides/03.Advanced Usage.md.hbs" End -->
+<!-- Section from "doc/guides/23.Advanced Usage.md.hbs" End -->
 
 
 <!-- Sections Start -->

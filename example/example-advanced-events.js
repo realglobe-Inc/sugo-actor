@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+/**
+ * This is an example for use event interface
+ */
 'use strict'
 
 const sugoActor = require('sugo-actor')
@@ -22,9 +25,7 @@ co(function * () {
               s.emit('change', { event, filename })
             })
             // Receive event from remote terminal
-            s.on('stop', () => {
-              watcher.close()
-            })
+            s.on('stop', () => watcher.close())
           })
         },
         /**

@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+/**
+ * This is an example to use a function module
+ */
 'use strict'
 
 const sugoActor = require('sugo-actor')

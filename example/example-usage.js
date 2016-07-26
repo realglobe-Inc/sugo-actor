@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * This is an example to run an actor
+ * This is an example to use an actor
  */
 
 'use strict'
@@ -14,7 +14,9 @@ const CLOUD_URL = 'http://my-sugo-cloud.example.com/actors'
 
 co(function * () {
   let actor = sugoActor(CLOUD_URL, {
+    /** Key to identify the actor */
     key: 'my-actor-01',
+    /** Modules to load */
     modules: {
       tableTennis: new Module({
         // Declare custom function

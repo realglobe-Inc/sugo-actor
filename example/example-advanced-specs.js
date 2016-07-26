@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 
+/**
+ * This is an example to define spec on module
+ *
+ * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
+ */
 'use strict'
 
 const sugoActor = require('sugo-actor')
@@ -17,7 +22,7 @@ co(function * () {
          * Module specification.
          * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
          */
-        get $spec() {
+        get $spec () {
           return {
             name: 'sugo-demo-actor-sample',
             version: '1.0.0',
