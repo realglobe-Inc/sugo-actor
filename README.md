@@ -125,7 +125,7 @@ $ npm install sugo-actor --save
 Usage
 ---------
 
- Create an actor class and connect it to a [SUGO-Cloud][sugo_cloud_url] cloud server.
+ Create an actor instance and connect it to a [SUGO-Cloud][sugo_cloud_url] server.
  
 ```javascript
 #!/usr/bin/env node
