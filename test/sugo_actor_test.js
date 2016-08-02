@@ -52,12 +52,17 @@ describe('sugo-actor', () => {
       modules: {
         bash: new MockModuleBash(),
         hoge: new Module({
-          hoge () {
+          sayHoge () {
             return 'This is hoge!'
           }
         })
       }
     })
+
+    {
+      let { hoge } = actor.modules
+      assert.ok(hoge.$spec.methods.sayHoge)
+    }
 
     yield actor.connect()
     yield asleep(10)
