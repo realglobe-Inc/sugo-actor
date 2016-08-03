@@ -46,7 +46,7 @@ Actor component of SUGOS.
 <a name="overview"></a>
 
 
-SUGO-Actor works as a client of [SUGO-Cloud][sugo_cloud_url] and provides modules to remote [SUGO-Caller][sugo_caller_url] .
+SUGO-Actor works as a client of [SUGO-Hub][sugo_hub_url] and provides modules to remote [SUGO-Caller][sugo_caller_url] .
 
 
 <!-- Overview End -->
@@ -125,7 +125,7 @@ $ npm install sugo-actor --save
 Usage
 ---------
 
- Create an actor instance and connect it to a [SUGO-Cloud][sugo_cloud_url] server.
+ Create an actor instance and connect it to a [SUGO-Hub][sugo_hub_url] server.
  
 ```javascript
 #!/usr/bin/env node
@@ -140,10 +140,10 @@ const sugoActor = require('sugo-actor')
 const { Module } = sugoActor
 const co = require('co')
 
-const CLOUD_URL = 'http://my-sugo-cloud.example.com/actors'
+const HUB_URL = 'http://my-sugo-hub.example.com/actors'
 
 co(function * () {
-  let actor = sugoActor(CLOUD_URL, {
+  let actor = sugoActor(HUB_URL, {
     /** Key to identify the actor */
     key: 'my-actor-01',
     /** Modules to load */
@@ -196,7 +196,7 @@ const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
+  let actor = sugoActor('http://my-sugo-hub.example.com/actors', {
     key: 'my-actor-01',
     modules: {
       sample01: new Module({
@@ -250,7 +250,7 @@ const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
+  let actor = sugoActor('http://my-sugo-hub.example.com/actors', {
     key: 'my-actor-01',
     modules: {
       sample01: new Module({
@@ -303,7 +303,7 @@ const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
+  let actor = sugoActor('http://my-sugo-hub.example.com/actors', {
     key: 'my-actor-01',
     modules: {
       sample01: new Module({ /* ... */ }),
@@ -349,11 +349,11 @@ Links
 ------
 
 + [sugos][sugos_url]
-+ [sugo-cloud][sugo_cloud_url]
++ [sugo-hub][sugo_hub_url]
 + [sugo-caller][sugo_caller_url]
 
 [sugos_url]: https://github.com/realglobe-Inc/sugos
-[sugo_cloud_url]: https://github.com/realglobe-Inc/sugo-cloud
+[sugo_hub_url]: https://github.com/realglobe-Inc/sugo-hub
 [sugo_caller_url]: https://github.com/realglobe-Inc/sugo-caller
 
 <!-- Links End -->

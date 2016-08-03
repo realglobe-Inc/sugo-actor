@@ -11,7 +11,7 @@ const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let actor = sugoActor('http://my-sugo-cloud.example.com/actors', {
+  let actor = sugoActor('http://my-sugo-hub.example.com/actors', {
     key: 'my-actor-01',
     modules: {
       sample01: new Module({ /* ... */ }),
