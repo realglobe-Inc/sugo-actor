@@ -45,10 +45,11 @@ describe('sugo-actor', () => {
   }))
 
   it('Sugo actor', () => co(function * () {
-    let url = `http://localhost:${port}/actors`
     const MockModuleBash = require('../misc/mocks/mock-module-bash')
-    let actor = new SugoActor(url, {
+    let actor = new SugoActor({
       key: 'hogehoge',
+      protocol: 'http',
+      port,
       modules: {
         bash: new MockModuleBash(),
         hoge: new Module({

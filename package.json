@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/realglobe-Inc/sugo-actor#readme",
   "dependencies": {
+    "argx": "^3.0.1",
     "asenv": "^1.0.4",
     "asleep": "^1.0.3",
     "co": "^4.6.0",

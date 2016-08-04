@@ -10,10 +10,10 @@ const sugoActor = require('sugo-actor')
 const { Module } = sugoActor
 const co = require('co')
 
-const HUB_URL = 'http://my-sugo-hub.example.com/actors'
-
 co(function * () {
-  let actor = sugoActor(HUB_URL, {
+  let actor = sugoActor({
+    protocol: 'https',
+    hostname: 'my-sugo-hub.example.com', // hostname of hub
     /** Key to identify the actor */
     key: 'my-actor-01',
     /** Modules to load */
