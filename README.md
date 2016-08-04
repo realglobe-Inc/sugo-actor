@@ -196,7 +196,9 @@ const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let actor = sugoActor('http://my-sugo-hub.example.com/actors', {
+  let actor = sugoActor({
+    protocol: 'https',
+    hostname: 'my-sugo-hub.example.com',
     key: 'my-actor-01',
     modules: {
       sample01: new Module({
@@ -250,7 +252,9 @@ const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let actor = sugoActor('http://my-sugo-hub.example.com/actors', {
+  let actor = sugoActor({
+    protocol: 'https',
+    hostname: 'my-sugo-hub.example.com',
     key: 'my-actor-01',
     modules: {
       sample01: new Module({
@@ -303,7 +307,9 @@ const co = require('co')
 const fs = require('fs')
 
 co(function * () {
-  let actor = sugoActor('http://my-sugo-hub.example.com/actors', {
+  let actor = sugoActor({
+    protocol: 'https',
+    hostname: 'my-sugo-hub.example.com',
     key: 'my-actor-01',
     modules: {
       sample01: new Module({ /* ... */ }),
