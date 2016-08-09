@@ -108,6 +108,15 @@ describe('sugo-actor', () => {
     yield asleep(100)
     Promise.all(actors.map((actor) => actor.disconnect()))
   }))
+
+  it('Parse url', () => co(function * () {
+    assert.equal(
+      SugoActor.urlFromConfig({
+        port: 3000
+      }),
+      'http://localhost:3000/actors'
+    )
+  }))
 })
 
 /* global describe, before, after, it */
