@@ -1,11 +1,12 @@
 {
   "name": "sugo-actor",
-  "version": "4.1.4",
+  "version": "4.1.6",
   "description": "Actor component of SUGOS.",
   "main": "lib",
   "browser": "shim/browser",
   "scripts": {
     "test": "./ci/test.js",
+    "test:browser": "./ci/test_browser.js",
     "prepublish": "./ci/assets.js && ./ci/build.js && ./ci/browser.js"
   },
   "repository": "realglobe-Inc/sugo-actor",
@@ -55,6 +56,7 @@
     "filedel": "^2.0.4",
     "injectmock": "^2.0.0",
     "markdown-toc": "^0.12.15",
+    "sg-karma": "^1.0.3",
     "sg-socket": "^1.0.12",
     "sg-travis": "^1.1.25",
     "sugos-assets": "^2.0.3"
