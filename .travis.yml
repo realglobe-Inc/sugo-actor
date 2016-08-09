@@ -17,7 +17,7 @@ script:
 - ./ci/test_browser.js
 - ./ci/cover.js
 - ./ci/report.js
-after_success:
+after_script:
 - ./ci/travis/publish.js
 - ./ci/travis/push_sugos.js
 env:
