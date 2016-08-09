@@ -3,9 +3,13 @@
 /**
  * Publish npm package
  */
+'use strict'
 
 process.chdir(`${__dirname}/../..`)
+const { runTasks } = require('ape-tasking')
+const { commitPush, publishNpm } = require('sg-travis')
 
-const { publishNpm } = require('sg-travis')
-
-publishNpm({})
+runTasks([
+  () => commitPush({}),
+  () => publishNpm({})
+])
