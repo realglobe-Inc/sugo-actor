@@ -59,6 +59,7 @@
     "sg-karma": "^1.0.4",
     "sg-socket": "^1.0.12",
     "sg-travis": "^1.1.29",
+    "socketio-auth": "0.0.5",
     "sugos-assets": "^2.0.3"
   },
   "engines": {

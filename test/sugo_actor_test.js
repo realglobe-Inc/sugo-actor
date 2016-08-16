@@ -7,6 +7,7 @@
 const SugoActor = require('../lib/sugo_actor.js')
 const sgSocket = require('sg-socket')
 const Module = require('../module')
+const socketIOAuth = require('socketio-auth')
 const assert = require('assert')
 const asleep = require('asleep')
 const co = require('co')
@@ -19,11 +20,18 @@ const { SPEC, PERFORM, PIPE } = RemoteEvents
 
 describe('sugo-actor', () => {
   let port = 9872
-  let server
+  let io
   let sockets = {}
   before(() => co(function * () {
-    server = sgSocket(port)
-    server.of('/actors').on('connection', (socket) => {
+    io = sgSocket(port)
+    let actiorIO = io.of('/actors')
+    socketIOAuth(actiorIO, {
+      authenticate (socket, data, callback) {
+        let valid = data.token === 'mytoken'
+        callback(null, valid)
+      }
+    })
+    actiorIO.on('connection', (socket) => {
       socket.on(HI, (data, callback) => {
         callback({ status: OK, payload: { key: data.key } })
       })
@@ -41,7 +49,7 @@ describe('sugo-actor', () => {
 
   after(() => co(function * () {
     yield asleep(200)
-    server.close()
+    io.close()
   }))
 
   it('Sugo actor', () => co(function * () {
@@ -50,6 +58,9 @@ describe('sugo-actor', () => {
       key: 'hogehoge',
       protocol: 'http',
       port,
+      auth: {
+        token: 'mytoken'
+      },
       modules: {
         bash: new MockModuleBash(),
         hoge: new Module({
