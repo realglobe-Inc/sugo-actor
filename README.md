@@ -334,13 +334,14 @@ co(function * () {
 
 ### Add Auth Configuration
 
-Setting `auth` filed will path
+You can pass auth config to SUGO-Hub by setting `auth` field on the constructor.
 
 ```javascript
 #!/usr/bin/env node
 
 /**
  * This is an example to use an auth
+ * @see https://github.com/realglobe-Inc/sugo-hub#use-authentication
  */
 'use strict'
 
