@@ -358,6 +358,7 @@ co(function * () {
     modules: { /* ... */ },
     // Auth for hub
     auth: {
+      // The structure of this field depends on `authenticate` logic implemented on SUGO-Hub
       token: 'a!09jkl3A'
     }
   })
