@@ -62,15 +62,15 @@ SUGO-Actor works as a client of [SUGO-Hub][sugo_hub_url] and provides modules to
 Table of Contents
 ----------------
 
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Advanced Usage](#advanced-usage)
-  * [Using EventEmitter Interface](#using-eventemitter-interface)
-  * [Description with `$spec`](#description-with-spec)
-  * [Declare a single function as module](#declare-a-single-function-as-module)
-- [License](#license)
-- [Links](#links)
+undefined [Requirements](#requirements)
+undefined [Installation](#installation)
+undefined [Usage](#usage)
+undefined [Advanced Usage](#advanced-usage)
+- [Using EventEmitter Interface](#using-eventemitter-interface)
+- [Description with `$spec`](#description-with-spec)
+- [Declare a single function as module](#declare-a-single-function-as-module)
+undefined [License](#license)
+undefined [Links](#links)
 
 
 <!-- Section from "doc/guides/00.TOC.md.hbs" End -->
