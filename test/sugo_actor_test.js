@@ -29,14 +29,7 @@ describe('sugo-actor', () => {
   let sockets = {}
   before(() => co(function * () {
     io = sgSocket(port)
-    let actorIO = io.of('/actors')
-    socketIOAuth(actorIO, {
-      authenticate (socket, data, callback) {
-        let valid = data.token === 'mytoken'
-        callback(null, valid)
-      }
-    })
-    actorIO.on('connection', (socket) => {
+    let handle = (socket) => {
       socket.on(HI, (data, callback) => {
         callback({ status: OK, payload: { key: data.key } })
       })
@@ -49,7 +42,17 @@ describe('sugo-actor', () => {
       socket.on(PIPE, (data) => {
       })
       sockets[ socket.id ] = socket
+    }
+    let actorIO = io.of('/actors')
+    actorIO.on('connection', handle)
+    let actorAuthIO = io.of('/auth/actors')
+    socketIOAuth(actorAuthIO, {
+      authenticate (socket, data, callback) {
+        let valid = data.token === 'mytoken'
+        callback(null, valid)
+      }
     })
+    actorAuthIO.on('connection', handle)
   }))
 
   after(() => co(function * () {
@@ -63,9 +66,6 @@ describe('sugo-actor', () => {
       key: 'hogehoge',
       protocol: 'http',
       port,
-      auth: {
-        token: 'mytoken'
-      },
       modules: {
         bash: new MockModuleBash(),
         hoge: new Module({
@@ -106,6 +106,43 @@ describe('sugo-actor', () => {
     yield asleep(100)
 
     yield actor.disconnect()
+  }))
+
+  it('With auth', () => co(function * () {
+    {
+      let actor = new SugoActor({
+        key: 'hogehoge2',
+        pathname: '/auth/actors',
+        port,
+        auth: {
+          token: 'mytoken'
+        },
+        modules: {}
+      })
+      yield actor.connect()
+      yield asleep(10)
+      yield actor.disconnect()
+    }
+    {
+      let actor = new SugoActor({
+        key: 'hogehoge2',
+        pathname: '/auth/actors',
+        port,
+        auth: {
+          token: '__invalid_token__'
+        },
+        modules: {}
+      })
+      let caught
+      try {
+        yield actor.connect()
+        yield asleep(10)
+        yield actor.disconnect()
+      } catch (e) {
+        caught = e
+      }
+      assert.ok(caught)
+    }
   }))
 
   it('Connect bunch of instances', () => co(function * () {
