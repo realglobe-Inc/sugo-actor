@@ -34,6 +34,6 @@ co(function * () {
     }
   })
 
-// Connect to cloud server
+// Connect to hub
   yield actor.connect()
 }).catch((err) => console.error(err))

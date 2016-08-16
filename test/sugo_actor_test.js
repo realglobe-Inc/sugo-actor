@@ -12,7 +12,12 @@ const assert = require('assert')
 const asleep = require('asleep')
 const co = require('co')
 
-const { GreetingEvents, RemoteEvents, AcknowledgeStatus } = require('sg-socket-constants')
+const {
+  GreetingEvents,
+  RemoteEvents,
+  AcknowledgeStatus
+
+} = require('sg-socket-constants')
 
 const { HI, BYE } = GreetingEvents
 const { OK, NG } = AcknowledgeStatus
@@ -24,14 +29,14 @@ describe('sugo-actor', () => {
   let sockets = {}
   before(() => co(function * () {
     io = sgSocket(port)
-    let actiorIO = io.of('/actors')
-    socketIOAuth(actiorIO, {
+    let actorIO = io.of('/actors')
+    socketIOAuth(actorIO, {
       authenticate (socket, data, callback) {
         let valid = data.token === 'mytoken'
         callback(null, valid)
       }
     })
-    actiorIO.on('connection', (socket) => {
+    actorIO.on('connection', (socket) => {
       socket.on(HI, (data, callback) => {
         callback({ status: OK, payload: { key: data.key } })
       })

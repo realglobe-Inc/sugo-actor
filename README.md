@@ -68,7 +68,8 @@ undefined [Usage](#usage)
 undefined [Advanced Usage](#advanced-usage)
 - [Using EventEmitter Interface](#using-eventemitter-interface)
 - [Description with `$spec`](#description-with-spec)
-- [Declare a single function as module](#declare-a-single-function-as-module)
+- [Declare a Single Function as Module](#declare-a-single-function-as-module)
+- [Add Auth Configuration](#add-auth-configuration)
 undefined [License](#license)
 undefined [Links](#links)
 
@@ -164,7 +165,7 @@ co(function * () {
     }
   })
 
-// Connect to cloud server
+// Connect to hub
   yield actor.connect()
 }).catch((err) => console.error(err))
 
@@ -226,7 +227,7 @@ co(function * () {
     }
   })
 
-// Connect to cloud server
+// Connect to hub
   yield actor.connect()
 }).catch((err) => console.error(err))
 
@@ -283,14 +284,14 @@ co(function * () {
     }
   })
 
-// Connect to cloud server
+// Connect to hub
   yield actor.connect()
 }).catch((err) => console.error(err))
 
 ```
 
 
-### Declare a single function as module
+### Declare a Single Function as Module
 
 Sometimes you do not want multiple module methods, but only one function.
 Just declaring a function as module would do this.
@@ -325,7 +326,42 @@ co(function * () {
     }
   })
 
-// Connect to cloud server
+// Connect to hub
+  yield actor.connect()
+}).catch((err) => console.error(err))
+
+```
+
+### Add Auth Configuration
+
+Setting `auth` filed will path
+
+```javascript
+#!/usr/bin/env node
+
+/**
+ * This is an example to use an auth
+ */
+'use strict'
+
+const sugoActor = require('sugo-actor')
+const { Module } = sugoActor
+const co = require('co')
+const fs = require('fs')
+
+co(function * () {
+  let actor = sugoActor({
+    protocol: 'https',
+    hostname: 'my-sugo-hub.example.com',
+    key: 'my-actor-01',
+    modules: { /* ... */ },
+    // Auth for hub
+    auth: {
+      token: 'a!09jkl3A'
+    }
+  })
+
+// Connect to hub
   yield actor.connect()
 }).catch((err) => console.error(err))
 

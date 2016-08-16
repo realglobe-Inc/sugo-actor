@@ -20,13 +20,21 @@ The spec object must conform to [module_spec.json][spec_schema_url], a JSON-Sche
 ```
 
 
-### Declare a single function as module
+### Declare a Single Function as Module
 
 Sometimes you do not want multiple module methods, but only one function.
 Just declaring a function as module would do this.
 
 ```javascript
 {{{read 'example/example-advanced-func.js'}}}
+```
+
+### Add Auth Configuration
+
+Setting `auth` filed will path
+
+```javascript
+{{{read 'example/example-advanced-auth.js'}}}
 ```
 
 [spec_schema_url]: https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
