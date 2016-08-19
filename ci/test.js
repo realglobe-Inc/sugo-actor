@@ -13,6 +13,6 @@ const amocha = require('amocha')
 
 apeTasking.runTasks('test', [
   () => amocha('test/*_test.js', {
-    timeout: 4000
+    timeout: 8000
   })
 ], true)
