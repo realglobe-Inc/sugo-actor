@@ -24,7 +24,7 @@ const {
 
 const { HI, BYE } = GreetingEvents
 const { OK, NG } = AcknowledgeStatus
-const { SPEC, PERFORM, PIPE } = RemoteEvents
+const { SPEC, DESPEC, PERFORM, PIPE } = RemoteEvents
 
 describe('sugo-actor', function () {
   this.timeout(16000)
@@ -37,6 +37,10 @@ describe('sugo-actor', function () {
       callback({ status: OK })
     })
     socket.on(SPEC, (data, callback) => {
+      callback({ status: OK })
+    })
+
+    socket.on(DESPEC, (data, callback) => {
       callback({ status: OK })
     })
     socket.on(PIPE, (data) => {
