@@ -231,8 +231,18 @@ describe('sugo-actor', function () {
         })
       }
     })
+
     yield actor.connect()
     yield asleep(100)
+
+    yield actor.load('fileAccess', new Module({
+      writer: new Module({
+        write () {}
+      }),
+      reader: new Module({
+        read () {}
+      })
+    }))
 
     {
       let caller = sugoCaller({ port })
@@ -252,6 +262,9 @@ describe('sugo-actor', function () {
 
       let { Article } = db
       console.log(yield Article.getTitle())
+
+      let fileAccess = hogehoge.get('fileAccess')
+      yield fileAccess.writer.write()
 
       yield hogehoge.disconnect()
     }
