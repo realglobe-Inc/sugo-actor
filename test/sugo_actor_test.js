@@ -223,6 +223,11 @@ describe('sugo-actor', function () {
               yield $$actor.unloadSub('db', [ 'User' ])
             })
           }
+        }),
+        'db.Article': new Module({
+          getTitle () {
+            return 'This is title!'
+          }
         })
       }
     })
@@ -244,8 +249,11 @@ describe('sugo-actor', function () {
         let { User } = db
         assert.ok(!User)
       }
-      yield hogehoge.disconnect()
 
+      let { Article } = db
+      console.log(yield Article.getTitle())
+
+      yield hogehoge.disconnect()
     }
 
     yield actor.disconnect()
