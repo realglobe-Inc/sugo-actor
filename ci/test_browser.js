@@ -11,7 +11,6 @@ process.env.DEBUG = 'sg:*'
 
 const apeTasking = require('ape-tasking')
 const co = require('co')
-const aport = require('aport')
 const sgSocket = require('sg-socket')
 const { exec } = require('child_process')
 
@@ -21,7 +20,8 @@ const { HI, BYE } = GreetingEvents
 const { OK, NG } = AcknowledgeStatus
 const { SPEC, DESPEC, PERFORM, PIPE } = RemoteEvents
 
-let server, port
+let server
+let port = 9872
 
 apeTasking.runTasks('browser test', [
   () => new Promise((resolve, reject) => {
@@ -30,7 +30,6 @@ apeTasking.runTasks('browser test', [
     })
   }),
   () => co(function * () {
-    port = yield aport()
     server = sgSocket(port)
     server.of('/actors').on('connection', (socket) => {
       socket.on(HI, (data, callback) => {
