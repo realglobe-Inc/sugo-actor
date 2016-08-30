@@ -20,7 +20,6 @@ describe('message-formatter', function () {
   }))
 
   it('Message formatter', () => co(function * () {
-
   }))
 })
 
