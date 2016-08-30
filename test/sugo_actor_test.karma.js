@@ -10,7 +10,8 @@ const assert = require('assert')
 const asleep = require('asleep')
 const co = require('co')
 
-describe('sugo-actor', () => {
+describe('sugo-actor', function () {
+  this.timeout(16000)
   let port = 9872
   before(() => co(function * () {
 
