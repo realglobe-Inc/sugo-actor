@@ -1,4 +1,4 @@
-# sugo-actor@4.4.0
+# sugo-actor@4.4.1
 
 Actor component of SUGOS.
 
