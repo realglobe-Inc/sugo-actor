@@ -128,7 +128,7 @@
           "name": "connect",
           "access": "",
           "virtual": false,
-          "description": "Connect to cloud",
+          "description": "Connect to hub.\nBy call this, actor share specification of the modules to hub so that callers can access them.",
           "parameters": [],
           "examples": [],
           "returns": {
@@ -140,14 +140,11 @@
           "name": "disconnect",
           "access": "",
           "virtual": false,
-          "description": "Disconnect from the cloud",
+          "description": "Disconnect from the hub",
           "parameters": [],
           "examples": [],
           "returns": {
-            "type": [
-              "*",
-              "Promise"
-            ],
+            "type": "Promise",
             "description": ""
           }
         },

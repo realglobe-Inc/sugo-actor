@@ -59,12 +59,13 @@ Constructor of SugoActor class
 <a name="sugo-actor-classes-sugo-actor-connect" />
 ### actor.connect() -> `Promise`
 
-Connect to cloud
+Connect to hub.
+By call this, actor share specification of the modules to hub so that callers can access them.
 
 <a name="sugo-actor-classes-sugo-actor-disconnect" />
-### actor.disconnect() -> `*,Promise`
+### actor.disconnect() -> `Promise`
 
-Disconnect from the cloud
+Disconnect from the hub
 
 <a name="sugo-actor-classes-sugo-actor-perform" />
 ### actor.perform(data) -> `Promise`

@@ -195,7 +195,7 @@ describe('sugo-actor', function () {
 
   it('Load nested modules', () => co(function * () {
     let port = yield aport()
-    let hub = yield sugoHub({ port })
+    let hub = yield sugoHub({}).listen(port)
     let actor = new SugoActor({
       key: 'hogehoge',
       port,
