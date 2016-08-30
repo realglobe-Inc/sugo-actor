@@ -7,7 +7,7 @@
   "scripts": {
     "test": "./ci/test.js",
     "test:browser": "./ci/test_browser.js",
-    "prepublish": "./ci/assets.js && ./ci/build.js && ./ci/browser.js"
+    "prepublish": "./ci/assets.js && ./ci/build.js && ./ci/browser.js && ./ci/doc.js"
   },
   "repository": "realglobe-Inc/sugo-actor",
   "keywords": [
@@ -45,7 +45,6 @@
     "ababel": "^1.1.2",
     "ababel-es2015": "^1.0.6",
     "amocha": "^1.0.14",
-    "ape-doc": "^2.0.4",
     "ape-formatting": "^1.0.0",
     "ape-releasing": "^4.0.2",
     "ape-reporting": "^3.0.1",
@@ -53,6 +52,7 @@
     "ape-tmpl": "^5.0.14",
     "ape-updating": "^4.0.2",
     "aport": "^1.0.0",
+    "babel-polyfill": "^6.13.0",
     "coz": "^6.0.17",
     "filecopy": "^2.0.0",
     "filedel": "^2.0.4",
@@ -60,11 +60,14 @@
     "markdown-toc": "^0.12.15",
     "sg-karma": "^1.0.4",
     "sg-socket": "^1.0.12",
+    "sg-templates": "^1.2.1",
     "sg-travis": "^1.1.29",
     "socketio-auth": "0.0.5",
-    "sugo-caller": "^2.2.4",
-    "sugo-hub": "^3.0.17",
-    "sugos-assets": "^2.0.3"
+    "stringcase": "^3.0.1",
+    "sugo-caller": "^3.0.1",
+    "sugo-hub": "^3.1.1",
+    "sugos-assets": "^2.0.3",
+    "writeout": "^2.0.7"
   },
   "engines": {
     "node": ">=6.x",
