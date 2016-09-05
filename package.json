@@ -5,9 +5,9 @@
   "main": "lib",
   "browser": "shim/browser",
   "scripts": {
-    "test": "./ci/test.js",
-    "test:browser": "./ci/test_browser.js",
-    "prepublish": "./ci/assets.js && ./ci/build.js && ./ci/browser.js && ./ci/doc.js"
+    "test": "node ./ci/test.js",
+    "test:browser": "node ./ci/test_browser.js",
+    "prepublish": "node ./ci/assets.js && node ./ci/build.js && node ./ci/browser.js && node ./ci/doc.js"
   },
   "repository": "realglobe-Inc/sugo-actor",
   "keywords": [
