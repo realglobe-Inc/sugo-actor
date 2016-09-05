@@ -58,6 +58,7 @@
     "filedel": "^2.0.4",
     "injectmock": "^2.0.0",
     "markdown-toc": "^0.12.15",
+    "sg-check": "^1.0.6",
     "sg-karma": "^1.0.4",
     "sg-socket": "^1.0.12",
     "sg-templates": "^1.2.1",

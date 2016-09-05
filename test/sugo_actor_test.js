@@ -14,6 +14,7 @@ const assert = require('assert')
 const asleep = require('asleep')
 const aport = require('aport')
 const co = require('co')
+const { hasBin } = require('sg-check')
 
 const {
   GreetingEvents,
@@ -114,7 +115,8 @@ describe('sugo-actor', function () {
         }, (res) => resolve())
       )
       yield asleep(10)
-      assert.ok(piped)
+
+      assert.equal((yield hasBin('ls')), piped)
     }
     yield asleep(100)
 
