@@ -202,7 +202,7 @@
           "name": "loadSub",
           "access": "",
           "virtual": false,
-          "description": "Load submodules",
+          "description": "Load sub modules",
           "parameters": [
             {
               "name": "moduleName",
