@@ -137,19 +137,18 @@ Usage
 
 'use strict'
 
-const sugoActor = require('../lib')
+const sugoActor = require('sugo-actor')
 const { Module } = sugoActor
 const co = require('co')
 
 co(function * () {
   let actor = sugoActor({
     /** Protocol to connect hub */
-    protocol: 'http',
+    protocol: 'https',
     /** Host name of hub */
-    host: 'localhost:3000',
+    hostname: 'my-sugo-hub.example.com',
     /** Key to identify the actor */
     key: 'my-actor-01',
-    path: '/hoge/socket.io',
     /** Modules to load */
     modules: {
       tableTennis: new Module({
@@ -162,7 +161,7 @@ co(function * () {
         }
       }),
       // Use module plugin
-      // shell: require('sugo-module-shell')({})
+      shell: require('sugo-module-shell')({})
     }
   })
 
