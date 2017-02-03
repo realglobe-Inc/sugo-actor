@@ -395,12 +395,14 @@ This software is released under the [Apache-2.0 License](https://github.com/real
 Links
 ------
 
-+ [sugos][sugos_url]
-+ [sugo-hub][sugo_hub_url]
-+ [sugo-caller][sugo_caller_url]
++ [SUGO-Hub][s_u_g_o_hub_url]
++ [SUGO-Caller][s_u_g_o_caller_url]
++ [SUGOS][sugos_url]
++ [Realglobe, Inc.][realglobe,_inc__url]
 
+[s_u_g_o_hub_url]: https://github.com/realglobe-Inc/sugo-hub
+[s_u_g_o_caller_url]: https://github.com/realglobe-Inc/sugo-caller
 [sugos_url]: https://github.com/realglobe-Inc/sugos
-[sugo_hub_url]: https://github.com/realglobe-Inc/sugo-hub
-[sugo_caller_url]: https://github.com/realglobe-Inc/sugo-caller
+[realglobe,_inc__url]: http://realglobe.jp
 
 <!-- Links End -->
