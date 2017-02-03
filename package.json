@@ -66,7 +66,7 @@
     "socketio-auth": "0.0.5",
     "stringcase": "^3.0.1",
     "sugo-caller": "^3.0.3",
-    "sugo-hub": "^4.0.1",
+    "sugo-hub": "^5.2.0",
     "sugos-assets": "^2.0.3",
     "sugos-travis": "^2.0.7",
     "writeout": "^2.0.7"
