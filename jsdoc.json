@@ -119,6 +119,14 @@
             "default": "",
             "optional": "",
             "nullable": ""
+          },
+          {
+            "name": "config.path",
+            "type": "string",
+            "description": "Socket.IO option.",
+            "default": "",
+            "optional": "",
+            "nullable": ""
           }
         ],
         "examples": []
