@@ -1,13 +1,13 @@
 {
   "name": "sugo-actor",
-  "version": "4.4.6",
+  "version": "4.5.2",
   "description": "Actor component of SUGOS.",
   "main": "lib",
   "browser": "shim/browser",
   "scripts": {
     "test": "node ./ci/test.js",
     "test:browser": "node ./ci/test_browser.js",
-    "prepublish": "node ./ci/assets.js && node ./ci/build.js && node ./ci/browser.js && node ./ci/doc.js"
+    "prepare": "node ./ci/assets.js && node ./ci/build.js && node ./ci/shim.js && node ./ci/doc.js"
   },
   "repository": "realglobe-Inc/sugo-actor",
   "keywords": [
@@ -68,13 +68,11 @@
     "sugo-caller": "^3.0.3",
     "sugo-hub": "^4.0.1",
     "sugos-assets": "^2.0.3",
+    "sugos-travis": "^2.0.7",
     "writeout": "^2.0.7"
   },
   "engines": {
-    "node": ">=6.x",
-    "npm": ">=3.x"
-  },
-  "publishConfig": {
-    "registry": "https://realglobe.artifactoryonline.com/realglobe/api/npm/npm-local"
+    "node": ">=6",
+    "npm": ">=4"
   }
 }
