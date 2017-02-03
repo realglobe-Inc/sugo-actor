@@ -7,7 +7,7 @@
   "scripts": {
     "test": "node ./ci/test.js",
     "test:browser": "node ./ci/test_browser.js",
-    "prepublish": "node ./ci/assets.js && node ./ci/build.js && node ./ci/browser.js && node ./ci/doc.js"
+    "prepare": "node ./ci/assets.js && node ./ci/build.js && node ./ci/shim.js && node ./ci/doc.js"
   },
   "repository": "realglobe-Inc/sugo-actor",
   "keywords": [
@@ -47,7 +47,6 @@
     "amocha": "^1.0.14",
     "ape-formatting": "^1.0.0",
     "ape-releasing": "^4.0.2",
-    "ape-reporting": "^3.0.1",
     "ape-tasking": "^4.0.7",
     "ape-tmpl": "^5.0.14",
     "ape-updating": "^4.0.2",
@@ -62,19 +61,16 @@
     "sg-karma": "^1.0.4",
     "sg-socket": "^1.0.12",
     "sg-templates": "^1.2.1",
-    "sg-travis": "^1.1.29",
     "socketio-auth": "0.0.5",
     "stringcase": "^3.0.1",
     "sugo-caller": "^3.0.3",
     "sugo-hub": "^4.0.1",
     "sugos-assets": "^2.0.3",
+    "sugos-travis": "^2.0.7",
     "writeout": "^2.0.7"
   },
   "engines": {
-    "node": ">=6.x",
-    "npm": ">=3.x"
-  },
-  "publishConfig": {
-    "registry": "https://realglobe.artifactoryonline.com/realglobe/api/npm/npm-local"
+    "node": ">=6",
+    "npm": ">=4"
   }
 }

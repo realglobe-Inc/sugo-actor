@@ -4,9 +4,9 @@ node_js:
 addons:
   firefox: "43.0"
 before_install:
-- echo "registry = https://realglobe.artifactoryonline.com/realglobe/api/npm/npm-virtual" > $HOME/.npmrc
-- curl -u${NPM_USER}:${NPM_PASSWORD} "https://realglobe.artifactoryonline.com/realglobe/api/npm/auth" >> $HOME/.npmrc
-- cat $HOME/.npmrc
+- npm i npm-cli-login -g
+- echo "NPM_USER=${NPM_USER}"
+- npm-cli-login -u "${NPM_USER}" -p "${NPM_PASSWORD}" -e "${NPM_EMAIL}"
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 install:
@@ -17,12 +17,8 @@ script:
 - ./ci/doc.js
 - ./ci/test.js
 - ./ci/test_browser.js
-- ./ci/cover.js
-- ./ci/report.js
 after_success:
 - ./ci/travis/publish.js
 - ./ci/travis/push_sugos.js
 env:
-  secure: "j71CKH3qMAnM81XmJOF7UITA/lw9o8M97s54eh8rUNizSrfPBPFNDm0In4iBMKk9aHO+NRrw/KoguRiMVjjb/IH1SD4vMDPaOMCm18UDLEtTNh4Y6lIHHZ6Z/WHbdrJaRaFCXXE/HWTijppdH8qZfD3Vz9tVKAcBz4yIdfukTFR6RJ1vUFDgmWJbLrcHgGFYrL0eiAHW8XoLfpeSUjVLbPfYgv7WP1QsMmUIofOvec3+uNOQiloLUIsEQVroXgTtfKYZuDB2Sz0ng7ZliXcYxN6o0QKCZnU4YtxZQSGKmPzHGqGIksy2rQ1Ey5XzQvaiBDZh5c5bXXug3uCoHfYCnB7It6+bA9TvAEq1DF+KKAHCTS0EeHQneuUBxDqymyXWCyzFgKp92LubZRsf/EZqx7nakH8crgEeF1Oy7VYZuRepoI+GwuSnQ+skTga1xVpEmgq3mATbX9uxdeLMaNxm+XTEbPXQLgVaAtjF+fwws+lcQ9AHPOf2rzKza+4KQQeofFceaJiloEdweYI9KKyeV6WNdxAY0mQ+xBDWhlXQHpjqjE2QL5NTmH3msNovr8TdqHGwjLAzb6/64uJD7/ImXSTkEf2D4EaEdfHi4KiFpgEhzk2HtJtUMAsZUFK3Zpc3PoOgOTi55T9mbR4fEdGPAyMm3DnhFmry5j0rtPP+Iao="
-env:
-  secure: "ohF8P6TcBuccX3tvE8NUuc9Ikg2rQ9vxpQcmBxxnwLrpJGqi0wM084b5w29WuCEIEeHrGiiO+4kGJDK2A7Std7JJhVq3JRcDkAMXQYZCjARlWHX7TMaYus4UNtBlgkMYI+ehvuWmIK5FT8WwUxqpIAkzNAEFn4Z8QKrifZGagMvjJ8xexD0Kkca3nFLqe8xdghgnyBm8NSMJ6jwY+j1YzF421aRzEHjPO5NTX2i3azEtMl/ZDS8I5nhVY/NNjMjllWfMAJeBIFet5RSg0OYSG3OBcjwpgHyP1JlwNM1C1WZzRdscMCKBbEYxSv/vflSA4axdjhQ39Rro7br4kB6LM5BVFsxOJeUIf512mCKWz3JZeVx8r7D7cOjoj0YN3mCp9z24x6wcww4NhPG3IoNF4Cy7yCig0ctoa5aBAdJMcDFzZHwaWcHNYUdrfk4BnRSFH2pAIwFd+pvNNKPHtZHgjFo/TcHy4I8DsQnorYbopwOEl0DsNrpbs1d2KAoPu5asv7qSjYrcQEkD73c603PiGSkMT649aDxN2LbaCBjEIXjXQTjYHYHQdBUeFEck0zTKmLCLRFdUAXzY104IfFvGZLrlwv7yIwlqOloRxHg2SiysDuvol36KPM0o81o4K5pc9MQ6UyHJnUEyYX7A68jg0JVqUodoVWd6WVVibmDvOyg="
+  secure: "KdmuklL7aFKP9LXbKPWXGMrA7Q2C5hIOs+9ls6V5QoKKyFpnztdhNriHdoXXC0vnl4CzxrtWvvBmanoH4ozCSgbIbOs4+agUB5slI03mBETiAkQQ6wzdfhswZCABpnT48qy6kcqYof5440ES/6mvVaJsO7eCqBreDZQEpg7lO//tWdrsiFgvo1iYNwM11vMkt9fysScg+ca+Mo7yegtDzh0x2ykPFrJ/tWmZ6DbSjcGE71creihlOyIKf7oF2O0OEw/rtK+pSI/R1CCcqxk3vBCnYDYC+PWJzBw3/BwUqOLoBZobiRwneUWoNDUR791JRLcdbxuLw2MVZV2P/ggwIULu9IbzjerkYfTP+WyJmgYiN4d81dzmRWNjcLcqK545yZpD4R+3lBIT2rdTX73YKHLRPyDmkq0mDx+DL0bnckzX56rSFE0vYSt62782BQqDmV9CIBRxJOoTfZ+eR6bM3o4X2Vam5bDJNdjO8/K/QUbOz5s3xU48oQE9cwJWXc48PCnSm/FbjjHnarO9JQ1uylLkvsvqvLqqvfUU2EMeG1Bv9/w74pluTH5D+8nSIl2c0Pmk8/+rpgDFBAGcIAyE9E9gmtJ8Ds3HW2IIlY5JFxA18+62rlJG9+y1szf/ANUcxV6RgapoCWHA7ZlZY5ZKKuS+bxNz11J6+DaDCOrU6Cs="
