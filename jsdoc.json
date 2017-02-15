@@ -24,6 +24,48 @@
       }
     },
     {
+      "name": "parseActorUrl",
+      "access": "",
+      "virtual": false,
+      "description": "Parse actor URL",
+      "parameters": [
+        {
+          "name": null,
+          "type": "Object",
+          "description": "",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        }
+      ],
+      "examples": [],
+      "returns": {
+        "type": "string",
+        "description": ""
+      }
+    },
+    {
+      "name": "validateModules",
+      "access": "",
+      "virtual": false,
+      "description": "Validate modules to load",
+      "parameters": [
+        {
+          "name": "modules",
+          "type": "Object",
+          "description": "",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        }
+      ],
+      "examples": [],
+      "returns": {
+        "type": "Error",
+        "description": "- Found errors"
+      }
+    },
+    {
       "name": "validatePerformConfig",
       "access": "",
       "virtual": false,
@@ -255,18 +297,34 @@
             "type": "Promise",
             "description": ""
           }
+        },
+        {
+          "name": "urlFromConfig",
+          "access": "",
+          "virtual": false,
+          "description": "",
+          "parameters": [],
+          "examples": []
+        },
+        {
+          "name": "parseActorUrl",
+          "access": "",
+          "virtual": false,
+          "description": "Parse actor url",
+          "parameters": [],
+          "examples": []
         }
       ]
     },
     {
-      "name": "WSEmitter",
+      "name": "WsEmitter",
       "description": "",
       "extends": [],
       "access": "",
       "virtual": false,
       "fires": "",
       "constructor": {
-        "name": "WSEmitter",
+        "name": "WsEmitter",
         "description": "Module emitter for WebSocket",
         "parameters": [],
         "examples": []

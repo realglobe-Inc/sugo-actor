@@ -1,4 +1,4 @@
-# sugo-actor@4.5.3
+# sugo-actor@4.6.0
 
 Actor component of SUGOS.
 
@@ -12,6 +12,8 @@ Actor component of SUGOS.
   + [actor.load(moduleName, module)](#sugo-actor-classes-sugo-actor-load)
   + [actor.loadSub(moduleName, subModules)](#sugo-actor-classes-sugo-actor-loadSub)
   + [actor.unload(name)](#sugo-actor-classes-sugo-actor-unload)
+  + [actor.urlFromConfig()](#sugo-actor-classes-sugo-actor-urlFromConfig)
+  + [actor.parseActorUrl()](#sugo-actor-classes-sugo-actor-parseActorUrl)
 
 ## Functions
 
@@ -118,6 +120,18 @@ Unload module with name
 | ----- | --- | -------- |
 | name | string | Name of module |
 
+
+<a class='md-heading-link' name="sugo-actor-classes-sugo-actor-urlFromConfig" ></a>
+
+### actor.urlFromConfig()
+
+
+
+<a class='md-heading-link' name="sugo-actor-classes-sugo-actor-parseActorUrl" ></a>
+
+### actor.parseActorUrl()
+
+Parse actor url
 
 
 
