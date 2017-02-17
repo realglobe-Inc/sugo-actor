@@ -114,7 +114,9 @@
     {
       "name": "SugoActor",
       "description": "",
-      "extends": [],
+      "extends": [
+        "SugoClient"
+      ],
       "access": "",
       "virtual": false,
       "fires": "",
@@ -350,6 +352,15 @@
           "description": "Parse actor url",
           "parameters": [],
           "examples": []
+        }
+      ],
+      "properties": [
+        {
+          "name": "clientType",
+          "access": "",
+          "virtual": false,
+          "description": "",
+          "type": ""
         }
       ]
     },
