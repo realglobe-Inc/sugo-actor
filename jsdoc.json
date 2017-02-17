@@ -31,7 +31,10 @@
       "parameters": [
         {
           "name": null,
-          "type": "Object",
+          "type": [
+            "Object",
+            "string"
+          ],
           "description": "",
           "default": "",
           "optional": "",
