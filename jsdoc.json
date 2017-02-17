@@ -281,10 +281,10 @@
           "name": "unload",
           "access": "",
           "virtual": false,
-          "description": "Unload module with name",
+          "description": "Unload a module",
           "parameters": [
             {
-              "name": "name",
+              "name": "moduleName",
               "type": "string",
               "description": "Name of module",
               "default": "",
@@ -297,6 +297,43 @@
             "type": "Promise",
             "description": ""
           }
+        },
+        {
+          "name": "unloadSub",
+          "access": "",
+          "virtual": false,
+          "description": "Unload sub module",
+          "parameters": [
+            {
+              "name": "moduleName",
+              "type": "string",
+              "description": "Name of module",
+              "default": "",
+              "optional": "",
+              "nullable": ""
+            },
+            {
+              "name": "subModuleNames",
+              "type": "Array.<string>",
+              "description": "Name of sub modules",
+              "default": "",
+              "optional": "",
+              "nullable": ""
+            }
+          ],
+          "examples": [],
+          "returns": {
+            "type": "*",
+            "description": ""
+          }
+        },
+        {
+          "name": "assertConnection",
+          "access": "",
+          "virtual": false,
+          "description": "Assert if the connected to hub",
+          "parameters": [],
+          "examples": []
         },
         {
           "name": "urlFromConfig",

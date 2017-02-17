@@ -11,7 +11,9 @@ Actor component of SUGOS.
   + [actor.perform(data)](#sugo-actor-classes-sugo-actor-perform)
   + [actor.load(moduleName, module)](#sugo-actor-classes-sugo-actor-load)
   + [actor.loadSub(moduleName, subModules)](#sugo-actor-classes-sugo-actor-loadSub)
-  + [actor.unload(name)](#sugo-actor-classes-sugo-actor-unload)
+  + [actor.unload(moduleName)](#sugo-actor-classes-sugo-actor-unload)
+  + [actor.unloadSub(moduleName, subModuleNames)](#sugo-actor-classes-sugo-actor-unloadSub)
+  + [actor.assertConnection()](#sugo-actor-classes-sugo-actor-assertConnection)
   + [actor.urlFromConfig()](#sugo-actor-classes-sugo-actor-urlFromConfig)
   + [actor.parseActorUrl()](#sugo-actor-classes-sugo-actor-parseActorUrl)
 
@@ -112,14 +114,32 @@ Load sub modules
 
 <a class='md-heading-link' name="sugo-actor-classes-sugo-actor-unload" ></a>
 
-### actor.unload(name) -> `Promise`
+### actor.unload(moduleName) -> `Promise`
 
-Unload module with name
+Unload a module
 
 | Param | Type | Description |
 | ----- | --- | -------- |
-| name | string | Name of module |
+| moduleName | string | Name of module |
 
+
+<a class='md-heading-link' name="sugo-actor-classes-sugo-actor-unloadSub" ></a>
+
+### actor.unloadSub(moduleName, subModuleNames) -> `*`
+
+Unload sub module
+
+| Param | Type | Description |
+| ----- | --- | -------- |
+| moduleName | string | Name of module |
+| subModuleNames | Array.&lt;string&gt; | Name of sub modules |
+
+
+<a class='md-heading-link' name="sugo-actor-classes-sugo-actor-assertConnection" ></a>
+
+### actor.assertConnection()
+
+Assert if the connected to hub
 
 <a class='md-heading-link' name="sugo-actor-classes-sugo-actor-urlFromConfig" ></a>
 
