@@ -90,6 +90,8 @@ describe('sugo-actor', function () {
       }
     })
 
+    assert.ok(actor.clientType)
+
     {
       let { hoge } = actor.modules
       assert.ok(hoge.$spec.methods.sayHoge)
