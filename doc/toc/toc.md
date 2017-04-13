@@ -6,5 +6,6 @@
   * [Description with `$spec`](#description-with-spec)
   * [Declare a Single Function as Module](#declare-a-single-function-as-module)
   * [Add Auth Configuration](#add-auth-configuration)
+  * [Detect Caller Join/Leave](#detect-caller-joinleave)
 - [License](#license)
 - [Links](#links)
