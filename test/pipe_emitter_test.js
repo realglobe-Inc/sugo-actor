@@ -1,14 +1,14 @@
 /**
- * Test case for wsEmitter.
- * Runs with karma.
+ * Test case for pipeEmitter.
+ * Runs with mocha.
  */
 'use strict'
 
-const wsEmitter = require('../shim/browser/emitting/ws_emitter.js')
+const pipeEmitter = require('../lib/emitting/pipe_emitter.js')
 const assert = require('assert')
 const co = require('co')
 
-describe('ws-emitter', function () {
+describe('pipe-emitter', function () {
   this.timeout(3000)
 
   before(() => co(function * () {
@@ -19,7 +19,7 @@ describe('ws-emitter', function () {
 
   }))
 
-  it('Ws emitter', () => co(function * () {
+  it('Pipe emitter', () => co(function * () {
 
   }))
 })

@@ -325,6 +325,7 @@ describe('sugo-actor', function () {
         return
       }
       granted.push(caller.key)
+      caller.emit('foo', { name: 'Foo' })
     })
 
     yield asleep(100)
@@ -346,9 +347,8 @@ describe('sugo-actor', function () {
 
     yield asleep(200)
 
-    // TODO Hub側でonlyをhandlingする必要がある
-    // ok(news[ '01' ])
-    // ok(!news[ '02' ])
+    ok(news[ '01' ])
+    ok(!news[ '02' ])
 
     yield caller01.disconnect()
     yield caller02.disconnect()
