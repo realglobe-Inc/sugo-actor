@@ -368,15 +368,63 @@
       ]
     },
     {
-      "name": "WsEmitter",
+      "name": "ActorPipeEmitter",
       "description": "",
       "extends": [],
       "access": "",
       "virtual": false,
       "fires": "",
       "constructor": {
-        "name": "WsEmitter",
-        "description": "Module emitter for WebSocket",
+        "name": "ActorPipeEmitter",
+        "description": "Pipe Emitter for actors",
+        "parameters": [],
+        "examples": []
+      }
+    },
+    {
+      "name": "ModulePipeEmitter",
+      "description": "",
+      "extends": [
+        "PipeEmitter"
+      ],
+      "access": "",
+      "virtual": false,
+      "fires": "",
+      "constructor": {
+        "name": "ModulePipeEmitter",
+        "description": "Pipe emitter for modules",
+        "parameters": [],
+        "examples": []
+      },
+      "functions": [
+        {
+          "name": "open",
+          "access": "",
+          "virtual": false,
+          "description": "Open the pipe.",
+          "parameters": [],
+          "examples": []
+        },
+        {
+          "name": "close",
+          "access": "",
+          "virtual": false,
+          "description": "Close the pipe.",
+          "parameters": [],
+          "examples": []
+        }
+      ]
+    },
+    {
+      "name": "PipeEmitter",
+      "description": "",
+      "extends": [],
+      "access": "",
+      "virtual": true,
+      "fires": "",
+      "constructor": {
+        "name": "PipeEmitter",
+        "description": "Pipe emitter",
         "parameters": [],
         "examples": []
       },
