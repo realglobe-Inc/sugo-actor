@@ -10,7 +10,7 @@ const Module = require('../module')
 const sugoHub = require('sugo-hub')
 const sugoCaller = require('sugo-caller')
 const socketIOAuth = require('socketio-auth')
-const assert = require('assert')
+const { ok, equal, deepEqual } = require('assert')
 const asleep = require('asleep')
 const aport = require('aport')
 const co = require('co')
@@ -90,11 +90,11 @@ describe('sugo-actor', function () {
       }
     })
 
-    assert.ok(actor.clientType)
+    ok(actor.clientType)
 
     {
       let { hoge } = actor.modules
-      assert.ok(hoge.$spec.methods.sayHoge)
+      ok(hoge.$spec.methods.sayHoge)
     }
 
     yield actor.connect()
@@ -104,7 +104,7 @@ describe('sugo-actor', function () {
       let socket = sockets[ id ]
       let piped = false
       socket.on(PIPE, (data) => {
-        assert.ok(data)
+        ok(data)
         piped = true
       })
       yield new Promise((resolve, reject) =>
@@ -118,7 +118,7 @@ describe('sugo-actor', function () {
       )
       yield asleep(10)
 
-      assert.equal((yield hasBin('ls')), piped)
+      equal((yield hasBin('ls')), piped)
     }
     yield asleep(100)
 
@@ -160,7 +160,7 @@ describe('sugo-actor', function () {
       } catch (e) {
         caught = e
       }
-      assert.ok(caught)
+      ok(caught)
     }
   }))
 
@@ -189,7 +189,7 @@ describe('sugo-actor', function () {
   }))
 
   it('Parse url', () => co(function * () {
-    assert.equal(
+    equal(
       SugoActor.urlFromConfig({
         port: 3000
       }),
@@ -260,25 +260,25 @@ describe('sugo-actor', function () {
 
     {
       let caller = sugoCaller({ port })
-      assert.ok(caller)
-      assert.equal(Object.keys(actorJoinMessages).length, 0)
+      ok(caller)
+      equal(Object.keys(actorJoinMessages).length, 0)
       let hogehoge = yield caller.connect('hogehoge', {
         messages: { initial: 'h' }
       })
-      assert.equal(Object.keys(actorJoinMessages).length, 1)
+      equal(Object.keys(actorJoinMessages).length, 1)
       let db = hogehoge.get('db')
       yield db.open()
 
       yield asleep(10)
       {
         let { User } = db
-        assert.deepEqual((yield User.findAll()), [ { name: 'User01' } ])
+        deepEqual((yield User.findAll()), [ { name: 'User01' } ])
       }
       yield db.close()
       yield asleep(10)
       {
         let { User } = db
-        assert.ok(!User)
+        ok(!User)
       }
 
       let { Article } = db
@@ -287,13 +287,71 @@ describe('sugo-actor', function () {
       let fileAccess = hogehoge.get('fileAccess')
       yield fileAccess.writer.write()
 
-      assert.equal(Object.keys(actorLeaveMessages).length, 0)
+      equal(Object.keys(actorLeaveMessages).length, 0)
 
       yield hogehoge.disconnect()
 
-      assert.equal(Object.keys(actorLeaveMessages).length, 1)
+      equal(Object.keys(actorLeaveMessages).length, 1)
     }
 
+    yield actor.disconnect()
+    yield asleep(100)
+    yield hub.close()
+    yield asleep(100)
+  }))
+
+  it('Specify callers to receive events', () => co(function * () {
+    let port = yield aport()
+    let hub = yield sugoHub({}).listen(port)
+    let fruitShop = new Module({
+      buy () {}
+    })
+    let actor = new SugoActor({
+      key: 'shoppingMall',
+      port,
+      modules: {
+        fruitShop
+      }
+    })
+
+    let caller01 = sugoCaller({ port })
+    let caller02 = sugoCaller({ port })
+
+    yield actor.connect()
+
+    let granted = []
+    actor.on(CallerEvents.JOIN, ({ caller, messages }) => {
+      if (messages.who === 'caller02') {
+        return
+      }
+      granted.push(caller.key)
+    })
+
+    yield asleep(100)
+
+    let shoppingMallFor01 = yield caller01.connect('shoppingMall', { messages: { who: 'caller01' } })
+    let shoppingMallFor02 = yield caller02.connect('shoppingMall', { messages: { who: 'caller02' } })
+
+    let news = {}
+    shoppingMallFor01.get('fruitShop').on('news', (data) => {
+      news[ '01' ] = data
+    })
+    shoppingMallFor02.get('fruitShop').on('news', (data) => {
+      news[ '02' ] = data
+    })
+
+    fruitShop.emit('news', { say: 'Welcome!' }, {
+      only: granted
+    })
+
+    yield asleep(200)
+
+    // TODO Hub側でonlyをhandlingする必要がある
+    // ok(news[ '01' ])
+    // ok(!news[ '02' ])
+
+    yield caller01.disconnect()
+    yield caller02.disconnect()
     yield actor.disconnect()
     yield asleep(100)
     yield hub.close()
