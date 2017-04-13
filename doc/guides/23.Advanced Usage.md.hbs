@@ -38,3 +38,12 @@ You can pass auth config to SUGO-Hub by setting `auth` field on the constructor.
 ```
 
 [spec_schema_url]: https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
+
+
+### Detect Caller Join/Leave
+
+Actor emits `CallerEvents.JOIN` and `CallerEvents.LEAVE` events each time a caller connected/disconnected.
+
+```javascript
+{{{read 'example/example-join-leave.js'}}}
+```

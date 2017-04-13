@@ -20,8 +20,8 @@ const {
   GreetingEvents,
   RemoteEvents,
   AcknowledgeStatus
-
 } = require('sg-socket-constants')
+const { CallerEvents } = require('sugo-constants')
 
 const { HI, BYE } = GreetingEvents
 const { OK, NG } = AcknowledgeStatus
@@ -239,6 +239,16 @@ describe('sugo-actor', function () {
     yield actor.connect()
     yield asleep(100)
 
+    let actorJoinMessages = {}
+    let actorLeaveMessages = {}
+    actor.on(CallerEvents.JOIN, ({ caller, messages }) => {
+      actorJoinMessages[ caller.key ] = messages
+    })
+
+    actor.on(CallerEvents.LEAVE, ({ caller, messages }) => {
+      actorLeaveMessages[ caller.key ] = messages
+    })
+
     yield actor.load('fileAccess', new Module({
       writer: new Module({
         write () {}
@@ -251,14 +261,21 @@ describe('sugo-actor', function () {
     {
       let caller = sugoCaller({ port })
       assert.ok(caller)
-      let hogehoge = yield caller.connect('hogehoge')
+      assert.equal(Object.keys(actorJoinMessages).length, 0)
+      let hogehoge = yield caller.connect('hogehoge', {
+        messages: { initial: 'h' }
+      })
+      assert.equal(Object.keys(actorJoinMessages).length, 1)
       let db = hogehoge.get('db')
       yield db.open()
+
+      yield asleep(10)
       {
         let { User } = db
         assert.deepEqual((yield User.findAll()), [ { name: 'User01' } ])
       }
       yield db.close()
+      yield asleep(10)
       {
         let { User } = db
         assert.ok(!User)
@@ -270,7 +287,11 @@ describe('sugo-actor', function () {
       let fileAccess = hogehoge.get('fileAccess')
       yield fileAccess.writer.write()
 
+      assert.equal(Object.keys(actorLeaveMessages).length, 0)
+
       yield hogehoge.disconnect()
+
+      assert.equal(Object.keys(actorLeaveMessages).length, 1)
     }
 
     yield actor.disconnect()
