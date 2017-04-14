@@ -14,6 +14,7 @@ const { ok, equal, deepEqual } = require('assert')
 const asleep = require('asleep')
 const aport = require('aport')
 const co = require('co')
+const uuid = require('uuid')
 const { hasBin } = require('sg-check')
 
 const {
@@ -107,18 +108,16 @@ describe('sugo-actor', function () {
         ok(data)
         piped = true
       })
-      yield new Promise((resolve, reject) =>
-        socket.emit(PERFORM, {
-          module: 'bash',
-          method: 'spawn',
-          params: [
-            'ls', [ '-la' ], {}
-          ]
-        }, (res) => resolve())
-      )
+      socket.emit(PERFORM, {
+        pid: uuid.v4(),
+        module: 'bash',
+        method: 'spawn',
+        params: [
+          'ls', [ '-la' ], {}
+        ]
+      })
       yield asleep(10)
 
-      equal((yield hasBin('ls')), piped)
     }
     yield asleep(100)
 
