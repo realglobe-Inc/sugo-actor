@@ -66,8 +66,8 @@
     "sg-templates": "^1.4.4",
     "socketio-auth": "^0.1.0",
     "stringcase": "^3.0.1",
-    "sugo-caller": "^3.4.3",
-    "sugo-hub": "^5.4.3",
+    "sugo-caller": "realglobe-Inc/sugo-caller#v4",
+    "sugo-hub": "realglobe-Inc/sugo-hub#v6",
     "sugos-assets": "^2.0.3",
     "sugos-travis": "^2.0.7",
     "writeout": "^2.0.7"
