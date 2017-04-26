@@ -140,9 +140,8 @@ Usage
 
 const sugoActor = require('sugo-actor')
 const { Module } = sugoActor
-const co = require('co')
 
-co(function * () {
+async function tryExample () {
   let actor = sugoActor({
     /** Protocol to connect hub */
     protocol: 'https',
@@ -154,11 +153,9 @@ co(function * () {
     modules: {
       tableTennis: new Module({
         // Declare custom function
-        ping (pong) {
-          return co(function * () {
-            /* ... */
-            return pong // Return value to pass caller
-          })
+        async ping (pong) {
+          /* ... */
+          return pong // Return value to pass caller
         }
       }),
       // Use module plugin
@@ -167,8 +164,10 @@ co(function * () {
   })
 
 // Connect to hub
-  yield actor.connect()
-}).catch((err) => console.error(err))
+  await actor.connect()
+}
+
+tryExample().catch((err) => console.error(err))
 
 ```
 
@@ -198,10 +197,9 @@ The [Module class](https://github.com/realglobe-Inc/sugo-module-base) provide Ev
 
 const sugoActor = require('sugo-actor')
 const { Module } = sugoActor
-const co = require('co')
 const fs = require('fs')
 
-co(function * () {
+async function tryEventExample () {
   let actor = sugoActor({
     protocol: 'https',
     hostname: 'my-sugo-hub.example.com',
@@ -209,17 +207,15 @@ co(function * () {
     modules: {
       sample01: new Module({
         // File watch with event emitter
-        watchFile (pattern) {
+        async watchFile (pattern) {
           const s = this
           //  "this" is has interface of EventEmitter class
-          return co(function * () {
-            let watcher = fs.watch(pattern, (event, filename) => {
-              // Emit event to remote terminal
-              s.emit('change', { event, filename })
-            })
-            // Receive event from remote terminal
-            s.on('stop', () => watcher.close())
+          let watcher = fs.watch(pattern, (event, filename) => {
+            // Emit event to remote terminal
+            s.emit('change', { event, filename })
           })
+          // Receive event from remote terminal
+          s.on('stop', () => watcher.close())
         },
         /**
          * Module specification.
@@ -229,10 +225,10 @@ co(function * () {
       })
     }
   })
-
 // Connect to hub
-  yield actor.connect()
-}).catch((err) => console.error(err))
+  await actor.connect()
+}
+tryEventExample().catch((err) => console.error(err))
 
 ```
 
@@ -254,17 +250,16 @@ The spec object must conform to [module_spec.json][spec_schema_url], a JSON-Sche
 
 const sugoActor = require('sugo-actor')
 const { Module } = sugoActor
-const co = require('co')
 const fs = require('fs')
 
-co(function * () {
+async function tryExample () {
   let actor = sugoActor({
     protocol: 'https',
     hostname: 'my-sugo-hub.example.com',
     key: 'my-actor-01',
     modules: {
       sample01: new Module({
-        watchFile (pattern) { /* ... */ },
+        async watchFile (pattern) { /* ... */ },
         /**
          * Module specification.
          * @see https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
@@ -287,9 +282,11 @@ co(function * () {
     }
   })
 
-// Connect to hub
-  yield actor.connect()
-}).catch((err) => console.error(err))
+  // Connect to hub
+  await actor.connect()
+}
+
+tryExample().catch((err) => console.error(err))
 
 ```
 
@@ -309,10 +306,9 @@ Just declaring a function as module would do this.
 
 const sugoActor = require('sugo-actor')
 const { Module } = sugoActor
-const co = require('co')
 const fs = require('fs')
 
-co(function * () {
+async function tryFuncExample () {
   let actor = sugoActor({
     protocol: 'https',
     hostname: 'my-sugo-hub.example.com',
@@ -320,18 +316,18 @@ co(function * () {
     modules: {
       sample01: new Module({ /* ... */ }),
       // A function as module
-      sample02: new Module((foo) => {
-        return co(function * () {
-          /* ... */
-          return 'say yo!'
-        })
+      sample02: new Module(async function (foo) {
+        /* ... */
+        return 'say yo!'
       })
     }
   })
 
-// Connect to hub
-  yield actor.connect()
-}).catch((err) => console.error(err))
+  // Connect to hub
+  await actor.connect()
+}
+
+tryFuncExample().catch((err) => console.error(err))
 
 ```
 
@@ -350,10 +346,9 @@ You can pass auth config to SUGO-Hub by setting `auth` field on the constructor.
 
 const sugoActor = require('sugo-actor')
 const { Module } = sugoActor
-const co = require('co')
 const fs = require('fs')
 
-co(function * () {
+async function tryAuthExample () {
   let actor = sugoActor({
     protocol: 'https',
     hostname: 'my-sugo-hub.example.com',
@@ -367,8 +362,10 @@ co(function * () {
   })
 
 // Connect to hub
-  yield actor.connect()
-}).catch((err) => console.error(err))
+  await actor.connect()
+}
+
+tryAuthExample().catch((err) => console.error(err))
 
 ```
 
@@ -389,11 +386,10 @@ Actor emits `CallerEvents.JOIN` and `CallerEvents.LEAVE` events each time a call
 
 const sugoActor = require('sugo-actor')
 const { CallerEvents } = sugoActor
-const co = require('co')
 
 const { JOIN, LEAVE } = CallerEvents
 
-co(function * () {
+async function tryJoinLeaveExample () {
   let actor = sugoActor({ /* ... */ })
 
   actor.on(JOIN, ({ caller, messages }) => {
@@ -405,8 +401,10 @@ co(function * () {
   })
 
 // Connect to hub
-  yield actor.connect()
-}).catch((err) => console.error(err))
+  await actor.connect()
+}
+
+tryJoinLeaveExample().catch((err) => console.error(err))
 
 ```
 

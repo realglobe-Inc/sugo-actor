@@ -8,9 +8,8 @@
 
 const sugoActor = require('sugo-actor')
 const { Module } = sugoActor
-const co = require('co')
 
-co(function * () {
+async function tryExample () {
   let actor = sugoActor({
     /** Protocol to connect hub */
     protocol: 'https',
@@ -22,11 +21,9 @@ co(function * () {
     modules: {
       tableTennis: new Module({
         // Declare custom function
-        ping (pong) {
-          return co(function * () {
-            /* ... */
-            return pong // Return value to pass caller
-          })
+        async ping (pong) {
+          /* ... */
+          return pong // Return value to pass caller
         }
       }),
       // Use module plugin
@@ -35,5 +32,7 @@ co(function * () {
   })
 
 // Connect to hub
-  yield actor.connect()
-}).catch((err) => console.error(err))
+  await actor.connect()
+}
+
+tryExample().catch((err) => console.error(err))
