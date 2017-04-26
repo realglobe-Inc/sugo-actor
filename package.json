@@ -1,6 +1,6 @@
 {
   "name": "sugo-actor",
-  "version": "4.6.4",
+  "version": "5.0.1",
   "description": "Actor component of SUGOS.",
   "main": "lib",
   "browser": "shim/browser",
@@ -56,7 +56,7 @@
     "aport": "^1.0.0",
     "babel-polyfill": "^6.23.0",
     "coz": "^6.0.17",
-    "filecopy": "^3.0.0",
+    "filecopy": "^3.0.1",
     "filedel": "^2.0.4",
     "injectmock": "^2.0.0",
     "markdown-toc": "^1.1.0",

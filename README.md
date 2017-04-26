@@ -70,6 +70,7 @@ Table of Contents
   * [Description with `$spec`](#description-with-spec)
   * [Declare a Single Function as Module](#declare-a-single-function-as-module)
   * [Add Auth Configuration](#add-auth-configuration)
+  * [Detect Caller Join/Leave](#detect-caller-joinleave)
 - [License](#license)
 - [Links](#links)
 
@@ -369,6 +370,42 @@ tryAuthExample().catch((err) => console.error(err))
 ```
 
 [spec_schema_url]: https://github.com/realglobe-Inc/sg-schemas/blob/master/lib/module_spec.json
+
+
+### Detect Caller Join/Leave
+
+Actor emits `CallerEvents.JOIN` and `CallerEvents.LEAVE` events each time a caller connected/disconnected.
+
+```javascript
+#!/usr/bin/env node
+
+/**
+ * This is an example to detect caller join/leave
+ */
+'use strict'
+
+const sugoActor = require('sugo-actor')
+const { CallerEvents } = sugoActor
+const co = require('co')
+
+const { JOIN, LEAVE } = CallerEvents
+
+co(function * () {
+  let actor = sugoActor({ /* ... */ })
+
+  actor.on(JOIN, ({ caller, messages }) => {
+    console.log(`Caller ${caller.key} joined with messages: ${messages}`)
+  })
+
+  actor.on(LEAVE, ({ caller, messages }) => {
+    console.log(`Caller ${caller.key} leaved with messages: ${messages}`)
+  })
+
+// Connect to hub
+  yield actor.connect()
+}).catch((err) => console.error(err))
+
+```
 
 
 <!-- Section from "doc/guides/23.Advanced Usage.md.hbs" End -->

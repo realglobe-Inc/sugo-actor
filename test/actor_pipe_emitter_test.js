@@ -1,14 +1,14 @@
 /**
- * Test case for wsEmitter.
+ * Test case for actorPipeEmitter.
  * Runs with mocha.
  */
 'use strict'
 
-const wsEmitter = require('../lib/emitting/ws_emitter.js')
+const actorPipeEmitter = require('../lib/emitting/actor_pipe_emitter.js')
 const assert = require('assert')
 const co = require('co')
 
-describe('ws-emitter', function () {
+describe('actor-pipe-emitter', function () {
   this.timeout(3000)
 
   before(() => co(function * () {
@@ -19,7 +19,7 @@ describe('ws-emitter', function () {
 
   }))
 
-  it('Ws emitter', () => co(function * () {
+  it('Actor pipe emitter', () => co(function * () {
 
   }))
 })

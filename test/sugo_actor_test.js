@@ -10,18 +10,19 @@ const Module = require('../module')
 const sugoHub = require('sugo-hub')
 const sugoCaller = require('sugo-caller')
 const socketIOAuth = require('socketio-auth')
-const assert = require('assert')
+const { ok, equal, deepEqual } = require('assert')
 const asleep = require('asleep')
 const aport = require('aport')
 const co = require('co')
+const uuid = require('uuid')
 const { hasBin } = require('sg-check')
 
 const {
   GreetingEvents,
   RemoteEvents,
   AcknowledgeStatus
-
 } = require('sg-socket-constants')
+const { CallerEvents } = require('sugo-constants')
 
 const { HI, BYE } = GreetingEvents
 const { OK, NG } = AcknowledgeStatus
@@ -90,11 +91,11 @@ describe('sugo-actor', function () {
       }
     })
 
-    assert.ok(actor.clientType)
+    ok(actor.clientType)
 
     {
       let { hoge } = actor.modules
-      assert.ok(hoge.$spec.methods.sayHoge)
+      ok(hoge.$spec.methods.sayHoge)
     }
 
     yield actor.connect()
@@ -104,21 +105,19 @@ describe('sugo-actor', function () {
       let socket = sockets[ id ]
       let piped = false
       socket.on(PIPE, (data) => {
-        assert.ok(data)
+        ok(data)
         piped = true
       })
-      yield new Promise((resolve, reject) =>
-        socket.emit(PERFORM, {
-          module: 'bash',
-          method: 'spawn',
-          params: [
-            'ls', [ '-la' ], {}
-          ]
-        }, (res) => resolve())
-      )
+      socket.emit(PERFORM, {
+        pid: uuid.v4(),
+        module: 'bash',
+        method: 'spawn',
+        params: [
+          'ls', [ '-la' ], {}
+        ]
+      })
       yield asleep(10)
 
-      assert.equal((yield hasBin('ls')), piped)
     }
     yield asleep(100)
 
@@ -160,7 +159,7 @@ describe('sugo-actor', function () {
       } catch (e) {
         caught = e
       }
-      assert.ok(caught)
+      ok(caught)
     }
   }))
 
@@ -189,7 +188,7 @@ describe('sugo-actor', function () {
   }))
 
   it('Parse url', () => co(function * () {
-    assert.equal(
+    equal(
       SugoActor.urlFromConfig({
         port: 3000
       }),
@@ -239,6 +238,16 @@ describe('sugo-actor', function () {
     yield actor.connect()
     yield asleep(100)
 
+    let actorJoinMessages = {}
+    let actorLeaveMessages = {}
+    actor.on(CallerEvents.JOIN, ({ caller, messages }) => {
+      actorJoinMessages[ caller.key ] = messages
+    })
+
+    actor.on(CallerEvents.LEAVE, ({ caller, messages }) => {
+      actorLeaveMessages[ caller.key ] = messages
+    })
+
     yield actor.load('fileAccess', new Module({
       writer: new Module({
         write () {}
@@ -250,18 +259,25 @@ describe('sugo-actor', function () {
 
     {
       let caller = sugoCaller({ port })
-      assert.ok(caller)
-      let hogehoge = yield caller.connect('hogehoge')
+      ok(caller)
+      equal(Object.keys(actorJoinMessages).length, 0)
+      let hogehoge = yield caller.connect('hogehoge', {
+        messages: { initial: 'h' }
+      })
+      equal(Object.keys(actorJoinMessages).length, 1)
       let db = hogehoge.get('db')
       yield db.open()
+
+      yield asleep(10)
       {
         let { User } = db
-        assert.deepEqual((yield User.findAll()), [ { name: 'User01' } ])
+        deepEqual((yield User.findAll()), [ { name: 'User01' } ])
       }
       yield db.close()
+      yield asleep(10)
       {
         let { User } = db
-        assert.ok(!User)
+        ok(!User)
       }
 
       let { Article } = db
@@ -270,9 +286,71 @@ describe('sugo-actor', function () {
       let fileAccess = hogehoge.get('fileAccess')
       yield fileAccess.writer.write()
 
+      equal(Object.keys(actorLeaveMessages).length, 0)
+
       yield hogehoge.disconnect()
+
+      equal(Object.keys(actorLeaveMessages).length, 1)
     }
 
+    yield actor.disconnect()
+    yield asleep(100)
+    yield hub.close()
+    yield asleep(100)
+  }))
+
+  it('Specify callers to receive events', () => co(function * () {
+    let port = yield aport()
+    let hub = yield sugoHub({}).listen(port)
+    let fruitShop = new Module({
+      buy () {}
+    })
+    let actor = new SugoActor({
+      key: 'shoppingMall',
+      port,
+      modules: {
+        fruitShop
+      }
+    })
+
+    let caller01 = sugoCaller({ port })
+    let caller02 = sugoCaller({ port })
+
+    yield actor.connect()
+
+    let granted = []
+    actor.on(CallerEvents.JOIN, ({ caller, messages }) => {
+      if (messages.who === 'caller02') {
+        return
+      }
+      granted.push(caller.key)
+      caller.emit('foo', { name: 'Foo' })
+    })
+
+    yield asleep(100)
+
+    let shoppingMallFor01 = yield caller01.connect('shoppingMall', { messages: { who: 'caller01' } })
+    let shoppingMallFor02 = yield caller02.connect('shoppingMall', { messages: { who: 'caller02' } })
+
+    let news = {}
+    shoppingMallFor01.get('fruitShop').on('news', (data) => {
+      news[ '01' ] = data
+    })
+    shoppingMallFor02.get('fruitShop').on('news', (data) => {
+      news[ '02' ] = data
+    })
+
+    fruitShop.emit('news', { say: 'Welcome!' }, {
+      only: granted
+    })
+
+    yield asleep(200)
+
+    ok(news[ '01' ])
+    ok(!news[ '02' ])
+
+    yield caller01.disconnect()
+    yield caller02.disconnect()
     yield actor.disconnect()
     yield asleep(100)
     yield hub.close()
