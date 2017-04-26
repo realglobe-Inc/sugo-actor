@@ -1,10 +1,10 @@
-# sugo-actor@4.6.3
+# sugo-actor@4.6.4
 
 Actor component of SUGOS.
 
 + Functions
   + [sugoActor(config)](#sugo-actor-function-sugo-actor)
-+ [SugoActor](sugo-actor-classes) Class
++ [`SugoActor`](#sugo-actor-classes) Class
   + [new SugoActor(url, config)](#sugo-actor-classes-sugo-actor-constructor)
   + [actor.connect()](#sugo-actor-classes-sugo-actor-connect)
   + [actor.disconnect()](#sugo-actor-classes-sugo-actor-disconnect)
@@ -43,8 +43,13 @@ co(function * () {
 
 <a class='md-heading-link' name="sugo-actor-classes"></a>
 
-## SugoActor Class
+## `SugoActor` Class
 
+
+
+**Extends**: 
+
++ `SugoClient`
 
 
 
