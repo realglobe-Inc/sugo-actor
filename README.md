@@ -386,11 +386,10 @@ Actor emits `CallerEvents.JOIN` and `CallerEvents.LEAVE` events each time a call
 
 const sugoActor = require('sugo-actor')
 const { CallerEvents } = sugoActor
-const co = require('co')
 
 const { JOIN, LEAVE } = CallerEvents
 
-co(function * () {
+async function tryJoinLeaveExample () {
   let actor = sugoActor({ /* ... */ })
 
   actor.on(JOIN, ({ caller, messages }) => {
@@ -402,8 +401,10 @@ co(function * () {
   })
 
 // Connect to hub
-  yield actor.connect()
-}).catch((err) => console.error(err))
+  await actor.connect()
+}
+
+tryJoinLeaveExample().catch((err) => console.error(err))
 
 ```
 
