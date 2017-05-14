@@ -235,6 +235,9 @@ describe('sugo-actor', function () {
             let error = new Error('Something is wrong!')
             Object.assign(error, { name: 'SOMETHING_WRONG_ERROR' })
             throw error
+          },
+          doNull () {
+            return null
           }
         })
       }
@@ -291,6 +294,10 @@ describe('sugo-actor', function () {
       {
         let caught = yield Article.somethingWrong().catch((e) => e)
         ok(caught)
+      }
+
+      {
+        ok((yield Article.doNull()) === null)
       }
 
       let fileAccess = hogehoge.get('fileAccess')
