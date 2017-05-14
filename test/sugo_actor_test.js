@@ -230,6 +230,11 @@ describe('sugo-actor', function () {
         'db.Article': new Module({
           getTitle () {
             return 'This is title!'
+          },
+          somethingWrong () {
+            let error = new Error('Something is wrong!')
+            Object.assign(error, { name: 'SOMETHING_WRONG_ERROR' })
+            throw error
           }
         })
       }
@@ -281,7 +286,12 @@ describe('sugo-actor', function () {
       }
 
       let { Article } = db
-      console.log(yield Article.getTitle())
+      ok(yield Article.getTitle())
+
+      {
+        let caught = yield Article.somethingWrong().catch((e) => e)
+        ok(caught)
+      }
 
       let fileAccess = hogehoge.get('fileAccess')
       yield fileAccess.writer.write()
