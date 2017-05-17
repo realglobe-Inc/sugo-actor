@@ -344,10 +344,12 @@ describe('sugo-actor', function () {
       caller.emit('foo', { name: 'Foo' })
     })
 
-    yield asleep(100)
+    yield asleep(200)
 
     let shoppingMallFor01 = yield caller01.connect('shoppingMall', { messages: { who: 'caller01' } })
     let shoppingMallFor02 = yield caller02.connect('shoppingMall', { messages: { who: 'caller02' } })
+
+    yield asleep(100)
 
     let news = {}
     shoppingMallFor01.get('fruitShop').on('news', (data) => {
@@ -368,6 +370,7 @@ describe('sugo-actor', function () {
 
     yield caller01.disconnect()
     yield caller02.disconnect()
+    yield asleep(100)
     yield actor.disconnect()
     yield asleep(100)
     yield hub.close()
