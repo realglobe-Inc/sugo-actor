@@ -10,44 +10,44 @@ const Module = require('../module')
 const sugoHub = require('sugo-hub')
 const sugoCaller = require('sugo-caller')
 const socketIOAuth = require('socketio-auth')
-const { ok, equal, deepEqual } = require('assert')
+const {ok, equal, deepEqual} = require('assert')
 const asleep = require('asleep')
 const aport = require('aport')
 const co = require('co')
 const uuid = require('uuid')
-const { hasBin } = require('sg-check')
+const {hasBin} = require('sg-check')
 
 const {
   GreetingEvents,
   RemoteEvents,
   AcknowledgeStatus
 } = require('sg-socket-constants')
-const { CallerEvents } = require('sugo-constants')
+const {CallerEvents} = require('sugo-constants')
 
-const { HI, BYE } = GreetingEvents
-const { OK, NG } = AcknowledgeStatus
-const { SPEC, DESPEC, PERFORM, PIPE } = RemoteEvents
+const {HI, BYE} = GreetingEvents
+const {OK, NG} = AcknowledgeStatus
+const {SPEC, DESPEC, PERFORM, PIPE} = RemoteEvents
 
 describe('sugo-actor', function () {
   this.timeout(16000)
 
   let handle = (socket) => {
     socket.on(HI, (data, callback) => {
-      callback({ status: OK, payload: { key: data.key } })
+      callback({status: OK, payload: {key: data.key}})
     })
     socket.on(BYE, (data, callback) => {
-      callback({ status: OK })
+      callback({status: OK})
     })
     socket.on(SPEC, (data, callback) => {
-      callback({ status: OK })
+      callback({status: OK})
     })
 
     socket.on(DESPEC, (data, callback) => {
-      callback({ status: OK })
+      callback({status: OK})
     })
     socket.on(PIPE, (data) => {
     })
-    sockets[ socket.id ] = socket
+    sockets[socket.id] = socket
   }
 
   let port = 9872
@@ -94,7 +94,7 @@ describe('sugo-actor', function () {
     ok(actor.clientType)
 
     {
-      let { hoge } = actor.modules
+      let {hoge} = actor.modules
       ok(hoge.$spec.methods.sayHoge)
     }
 
@@ -102,7 +102,7 @@ describe('sugo-actor', function () {
     yield asleep(10)
 
     for (let id of Object.keys(sockets)) {
-      let socket = sockets[ id ]
+      let socket = sockets[id]
       let piped = false
       socket.on(PIPE, (data) => {
         ok(data)
@@ -113,7 +113,7 @@ describe('sugo-actor', function () {
         module: 'bash',
         method: 'spawn',
         params: [
-          'ls', [ '-la' ], {}
+          'ls', ['-la'], {}
         ]
       })
       yield asleep(10)
@@ -208,12 +208,12 @@ describe('sugo-actor', function () {
         db: new Module({
           open () {
             const s = this
-            let { $$actor } = s
+            let {$$actor} = s
             return co(function * () {
               yield $$actor.loadSub('db', {
                 User: new Module({
                   findAll () {
-                    return [ { name: 'User01' } ]
+                    return [{name: 'User01'}]
                   }
                 })
               })
@@ -221,9 +221,9 @@ describe('sugo-actor', function () {
           },
           close () {
             const s = this
-            let { $$actor } = s
+            let {$$actor} = s
             return co(function * () {
-              yield $$actor.unloadSub('db', [ 'User' ])
+              yield $$actor.unloadSub('db', ['User'])
             })
           }
         }),
@@ -233,7 +233,7 @@ describe('sugo-actor', function () {
           },
           somethingWrong () {
             let error = new Error('Something is wrong!')
-            Object.assign(error, { name: 'SOMETHING_WRONG_ERROR' })
+            Object.assign(error, {name: 'SOMETHING_WRONG_ERROR'})
             throw error
           },
           doNull () {
@@ -248,12 +248,12 @@ describe('sugo-actor', function () {
 
     let actorJoinMessages = {}
     let actorLeaveMessages = {}
-    actor.on(CallerEvents.JOIN, ({ caller, messages }) => {
-      actorJoinMessages[ caller.key ] = messages
+    actor.on(CallerEvents.JOIN, ({caller, messages}) => {
+      actorJoinMessages[caller.key] = messages
     })
 
-    actor.on(CallerEvents.LEAVE, ({ caller, messages }) => {
-      actorLeaveMessages[ caller.key ] = messages
+    actor.on(CallerEvents.LEAVE, ({caller, messages}) => {
+      actorLeaveMessages[caller.key] = messages
     })
 
     yield actor.load('fileAccess', new Module({
@@ -266,11 +266,11 @@ describe('sugo-actor', function () {
     }))
 
     {
-      let caller = sugoCaller({ port })
+      let caller = sugoCaller({port})
       ok(caller)
       equal(Object.keys(actorJoinMessages).length, 0)
       let hogehoge = yield caller.connect('hogehoge', {
-        messages: { initial: 'h' }
+        messages: {initial: 'h'}
       })
       equal(Object.keys(actorJoinMessages).length, 1)
       let db = hogehoge.get('db')
@@ -278,17 +278,17 @@ describe('sugo-actor', function () {
 
       yield asleep(10)
       {
-        let { User } = db
-        deepEqual((yield User.findAll()), [ { name: 'User01' } ])
+        let {User} = db
+        deepEqual((yield User.findAll()), [{name: 'User01'}])
       }
       yield db.close()
       yield asleep(10)
       {
-        let { User } = db
+        let {User} = db
         ok(!User)
       }
 
-      let { Article } = db
+      let {Article} = db
       ok(yield Article.getTitle())
 
       {
@@ -330,43 +330,43 @@ describe('sugo-actor', function () {
       }
     })
 
-    let caller01 = sugoCaller({ port })
-    let caller02 = sugoCaller({ port })
+    let caller01 = sugoCaller({port})
+    let caller02 = sugoCaller({port})
 
     yield actor.connect()
 
     let granted = []
-    actor.on(CallerEvents.JOIN, ({ caller, messages }) => {
+    actor.on(CallerEvents.JOIN, ({caller, messages}) => {
       if (messages.who === 'caller02') {
         return
       }
       granted.push(caller.key)
-      caller.emit('foo', { name: 'Foo' })
+      caller.emit('foo', {name: 'Foo'})
     })
 
     yield asleep(200)
 
-    let shoppingMallFor01 = yield caller01.connect('shoppingMall', { messages: { who: 'caller01' } })
-    let shoppingMallFor02 = yield caller02.connect('shoppingMall', { messages: { who: 'caller02' } })
+    let shoppingMallFor01 = yield caller01.connect('shoppingMall', {messages: {who: 'caller01'}})
+    let shoppingMallFor02 = yield caller02.connect('shoppingMall', {messages: {who: 'caller02'}})
 
     yield asleep(100)
 
     let news = {}
     shoppingMallFor01.get('fruitShop').on('news', (data) => {
-      news[ '01' ] = data
+      news['01'] = data
     })
     shoppingMallFor02.get('fruitShop').on('news', (data) => {
-      news[ '02' ] = data
+      news['02'] = data
     })
 
-    fruitShop.emit('news', { say: 'Welcome!' }, {
+    fruitShop.emit('news', {say: 'Welcome!'}, {
       only: granted
     })
 
-    yield asleep(200)
+    yield asleep(300)
 
-    ok(news[ '01' ])
-    ok(!news[ '02' ])
+    ok(news['01'])
+    ok(!news['02'])
 
     yield caller01.disconnect()
     yield caller02.disconnect()
