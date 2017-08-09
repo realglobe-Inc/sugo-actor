@@ -13,9 +13,8 @@ const socketIOAuth = require('socketio-auth')
 const {ok, equal, deepEqual} = require('assert')
 const asleep = require('asleep')
 const aport = require('aport')
-const co = require('co')
+
 const uuid = require('uuid')
-const {hasBin} = require('sg-check')
 
 const {
   GreetingEvents,
@@ -31,29 +30,28 @@ const {SPEC, DESPEC, PERFORM, PIPE} = RemoteEvents
 describe('sugo-actor', function () {
   this.timeout(16000)
 
-  let handle = (socket) => {
-    socket.on(HI, (data, callback) => {
+  const handle = (socket) => {
+    socket.on(HI, (data, callback) =>
       callback({status: OK, payload: {key: data.key}})
-    })
-    socket.on(BYE, (data, callback) => {
+    )
+    socket.on(BYE, (data, callback) =>
       callback({status: OK})
-    })
-    socket.on(SPEC, (data, callback) => {
+    )
+    socket.on(SPEC, (data, callback) =>
       callback({status: OK})
-    })
+    )
 
-    socket.on(DESPEC, (data, callback) => {
+    socket.on(DESPEC, (data, callback) =>
       callback({status: OK})
-    })
-    socket.on(PIPE, (data) => {
-    })
+    )
+    socket.on(PIPE, (data) => {})
     sockets[socket.id] = socket
   }
 
   let port = 9872
   let io
   let sockets = {}
-  before(() => co(function * () {
+  before(() => {
     io = sgSocket(port)
     let actorIO = io.of('/actors')
     actorIO.on('connection', handle)
@@ -65,15 +63,15 @@ describe('sugo-actor', function () {
       }
     })
     actorAuthIO.on('connection', handle)
-  }))
+  })
 
-  after(() => co(function * () {
-    yield asleep(200)
+  after(async () => {
+    await asleep(200)
     io.close()
-    yield asleep(100)
-  }))
+    await asleep(100)
+  })
 
-  it('Sugo actor', () => co(function * () {
+  it('Sugo actor', async () => {
     const MockModuleBash = require('../misc/mocks/mock-module-bash')
     let actor = new SugoActor({
       key: 'hogehoge',
@@ -98,8 +96,8 @@ describe('sugo-actor', function () {
       ok(hoge.$spec.methods.sayHoge)
     }
 
-    yield actor.connect()
-    yield asleep(10)
+    await actor.connect()
+    await asleep(10)
 
     for (let id of Object.keys(sockets)) {
       let socket = sockets[id]
@@ -116,15 +114,14 @@ describe('sugo-actor', function () {
           'ls', ['-la'], {}
         ]
       })
-      yield asleep(10)
-
+      await asleep(10)
     }
-    yield asleep(100)
+    await asleep(100)
 
-    yield actor.disconnect()
-  }))
+    await actor.disconnect()
+  })
 
-  it('With auth', () => co(function * () {
+  it('With auth', async () => {
     {
       let actor = new SugoActor({
         key: 'hogehoge2',
@@ -137,9 +134,9 @@ describe('sugo-actor', function () {
         },
         modules: {}
       })
-      yield actor.connect()
-      yield asleep(10)
-      yield actor.disconnect()
+      await actor.connect()
+      await asleep(10)
+      await actor.disconnect()
     }
     {
       let actor = new SugoActor({
@@ -153,17 +150,17 @@ describe('sugo-actor', function () {
       })
       let caught
       try {
-        yield actor.connect()
-        yield asleep(10)
-        yield actor.disconnect()
+        await actor.connect()
+        await asleep(10)
+        await actor.disconnect()
       } catch (e) {
         caught = e
       }
       ok(caught)
     }
-  }))
+  })
 
-  it('Connect bunch of instances', () => co(function * () {
+  it('Connect bunch of instances', async () => {
     let url = `http://localhost:${port}/actors`
     let actors = Array.apply(null, new Array(20)).map((v, i) => new SugoActor(url, {
       key: `hugehuge-${i}`,
@@ -178,27 +175,27 @@ describe('sugo-actor', function () {
       }
     }))
     for (let actor of actors) {
-      yield actor.connect()
+      await actor.connect()
     }
-    yield asleep(100)
+    await asleep(100)
     for (let actor of actors) {
-      yield actor.disconnect()
+      await actor.disconnect()
     }
-    yield asleep(100)
-  }))
+    await asleep(100)
+  })
 
-  it('Parse url', () => co(function * () {
+  it('Parse url', async () => {
     equal(
       SugoActor.urlFromConfig({
         port: 3000
       }),
       'http://localhost:3000/actors'
     )
-  }))
+  })
 
-  it('Load nested modules', () => co(function * () {
-    let port = yield aport()
-    let hub = yield sugoHub({}).listen(port)
+  it('Load nested modules', async () => {
+    let port = await aport()
+    let hub = await sugoHub({}).listen(port)
     let actor = new SugoActor({
       key: 'hogehoge',
       port,
@@ -206,25 +203,21 @@ describe('sugo-actor', function () {
       reconnection: false,
       modules: {
         db: new Module({
-          open () {
+          async open () {
             const s = this
             let {$$actor} = s
-            return co(function * () {
-              yield $$actor.loadSub('db', {
-                User: new Module({
-                  findAll () {
-                    return [{name: 'User01'}]
-                  }
-                })
+            await $$actor.loadSub('db', {
+              User: new Module({
+                findAll () {
+                  return [{name: 'User01'}]
+                }
               })
             })
           },
-          close () {
+          async close () {
             const s = this
             let {$$actor} = s
-            return co(function * () {
-              yield $$actor.unloadSub('db', ['User'])
-            })
+            await $$actor.unloadSub('db', ['User'])
           }
         }),
         'db.Article': new Module({
@@ -243,8 +236,8 @@ describe('sugo-actor', function () {
       }
     })
 
-    yield actor.connect()
-    yield asleep(100)
+    await actor.connect()
+    await asleep(100)
 
     let actorJoinMessages = {}
     let actorLeaveMessages = {}
@@ -256,69 +249,71 @@ describe('sugo-actor', function () {
       actorLeaveMessages[caller.key] = messages
     })
 
-    yield actor.load('fileAccess', new Module({
-      writer: new Module({
-        write () {}
-      }),
-      reader: new Module({
-        read () {}
+    await actor.load('fileAccess',
+      new Module({
+        writer: new Module({
+          write () {}
+        }),
+        reader: new Module({
+          read () {}
+        })
       })
-    }))
+    )
 
     {
       let caller = sugoCaller({port})
       ok(caller)
       equal(Object.keys(actorJoinMessages).length, 0)
-      let hogehoge = yield caller.connect('hogehoge', {
+      let hogehoge = await caller.connect('hogehoge', {
         messages: {initial: 'h'}
       })
       equal(Object.keys(actorJoinMessages).length, 1)
       let db = hogehoge.get('db')
-      yield db.open()
+      await db.open()
 
-      yield asleep(10)
+      await asleep(10)
       {
         let {User} = db
-        deepEqual((yield User.findAll()), [{name: 'User01'}])
+        deepEqual((await User.findAll()), [{name: 'User01'}])
       }
-      yield db.close()
-      yield asleep(10)
+      await db.close()
+      await asleep(10)
       {
         let {User} = db
         ok(!User)
       }
 
       let {Article} = db
-      ok(yield Article.getTitle())
+      ok(await Article.getTitle())
 
       {
-        let caught = yield Article.somethingWrong().catch((e) => e)
+        let caught = await Article.somethingWrong().catch((e) => e)
         ok(caught)
       }
 
       {
-        ok((yield Article.doNull()) === null)
+        ok((await Article.doNull()) === null)
       }
 
       let fileAccess = hogehoge.get('fileAccess')
-      yield fileAccess.writer.write()
+      await fileAccess.writer.write()
 
       equal(Object.keys(actorLeaveMessages).length, 0)
 
-      yield hogehoge.disconnect()
+      await hogehoge.disconnect()
 
       equal(Object.keys(actorLeaveMessages).length, 1)
     }
 
-    yield actor.disconnect()
-    yield asleep(100)
-    yield hub.close()
-    yield asleep(100)
-  }))
+    await actor.disconnect()
+    await asleep(100)
+    await hub.close()
+    await asleep(100)
+  })
 
-  it('Specify callers to receive events', () => co(function * () {
-    let port = yield aport()
-    let hub = yield sugoHub({}).listen(port)
+  it('Specify callers to receive events', async () => {
+    let port = await aport()
+    let hub = await sugoHub({}).listen(port)
     let fruitShop = new Module({
       buy () {}
     })
@@ -333,7 +328,7 @@ describe('sugo-actor', function () {
     let caller01 = sugoCaller({port})
     let caller02 = sugoCaller({port})
 
-    yield actor.connect()
+    await actor.connect()
 
     let granted = []
     actor.on(CallerEvents.JOIN, ({caller, messages}) => {
@@ -344,12 +339,12 @@ describe('sugo-actor', function () {
       caller.emit('foo', {name: 'Foo'})
     })
 
-    yield asleep(200)
+    await asleep(200)
 
-    let shoppingMallFor01 = yield caller01.connect('shoppingMall', {messages: {who: 'caller01'}})
-    let shoppingMallFor02 = yield caller02.connect('shoppingMall', {messages: {who: 'caller02'}})
+    let shoppingMallFor01 = await caller01.connect('shoppingMall', {messages: {who: 'caller01'}})
+    let shoppingMallFor02 = await caller02.connect('shoppingMall', {messages: {who: 'caller02'}})
 
-    yield asleep(100)
+    await asleep(100)
 
     let news = {}
     shoppingMallFor01.get('fruitShop').on('news', (data) => {
@@ -363,19 +358,19 @@ describe('sugo-actor', function () {
       only: granted
     })
 
-    yield asleep(300)
+    await asleep(300)
 
     ok(news['01'])
     ok(!news['02'])
 
-    yield caller01.disconnect()
-    yield caller02.disconnect()
-    yield asleep(100)
-    yield actor.disconnect()
-    yield asleep(100)
-    yield hub.close()
-    yield asleep(100)
-  }))
+    await caller01.disconnect()
+    await caller02.disconnect()
+    await asleep(100)
+    await actor.disconnect()
+    await asleep(100)
+    await hub.close()
+    await asleep(100)
+  })
 })
 
 /* global describe, before, after, it */

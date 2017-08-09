@@ -6,22 +6,22 @@
 
 const messageFormatter = require('../shim/browser/emitting/message_formatter.js')
 const assert = require('assert')
-const co = require('co')
+
 
 describe('message-formatter', function () {
   this.timeout(3000)
 
-  before(() => co(function * () {
+  before(() => {
 
-  }))
+  })
 
-  after(() => co(function * () {
+  after(() => {
 
-  }))
+  })
 
-  it('Message formatter', () => co(function * () {
+  it('Message formatter', () => {
 
-  }))
+  })
 })
 
 /* global describe, before, after, it */

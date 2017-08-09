@@ -6,20 +6,20 @@
 
 const validateModules = require('../lib/validating/validate_modules.js')
 const assert = require('assert')
-const co = require('co')
+
 
 describe('validate-modules', function () {
   this.timeout(3000)
 
-  before(() => co(function * () {
+  before(() => {
 
-  }))
+  })
 
-  after(() => co(function * () {
+  after(() => {
 
-  }))
+  })
 
-  it('Validate modules', () => co(function * () {
+  it('Validate modules', () => {
     {
       let error = validateModules({
         foo: {
@@ -46,7 +46,7 @@ describe('validate-modules', function () {
       })
       assert.ok(error, 'Should be error with reserved method name')
     }
-  }))
+  })
 })
 
 /* global describe, before, after, it */

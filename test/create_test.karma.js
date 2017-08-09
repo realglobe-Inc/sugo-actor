@@ -6,23 +6,23 @@
 
 const create = require('../shim/browser/create.js')
 const assert = require('assert')
-const co = require('co')
+
 
 describe('create', () => {
-  before(() => co(function * () {
+  before(() => {
 
-  }))
+  })
 
-  after(() => co(function * () {
+  after(() => {
 
-  }))
+  })
 
-  it('Create', () => co(function * () {
+  it('Create', () => {
     let instance = create('http://example.com', {
       key: 'foo'
     })
     assert.ok(instance)
-  }))
+  })
 })
 
 /* global describe, before, after, it */

@@ -6,22 +6,22 @@
 
 const pipeEmitter = require('../lib/emitting/pipe_emitter.js')
 const assert = require('assert')
-const co = require('co')
+
 
 describe('pipe-emitter', function () {
   this.timeout(3000)
 
-  before(() => co(function * () {
+  before(() => {
 
-  }))
+  })
 
-  after(() => co(function * () {
+  after(() => {
 
-  }))
+  })
 
-  it('Pipe emitter', () => co(function * () {
+  it('Pipe emitter', () => {
 
-  }))
+  })
 })
 
 /* global describe, before, after, it */
