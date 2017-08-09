@@ -6,22 +6,22 @@
 
 const actorPipeEmitter = require('../lib/emitting/actor_pipe_emitter.js')
 const assert = require('assert')
-const co = require('co')
+
 
 describe('actor-pipe-emitter', function () {
   this.timeout(3000)
 
-  before(() => co(function * () {
+  before(() => {
 
-  }))
+  })
 
-  after(() => co(function * () {
+  after(() => {
 
-  }))
+  })
 
-  it('Actor pipe emitter', () => co(function * () {
+  it('Actor pipe emitter', () => {
 
-  }))
+  })
 })
 
 /* global describe, before, after, it */

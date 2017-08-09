@@ -1,451 +1,1118 @@
 {
-  "functions": [
-    {
-      "name": "sugoActor",
-      "access": "",
-      "virtual": false,
-      "description": "Create an actor instance. Just an alias of `new SugoActor(config)`",
-      "parameters": [
+    "functions": [
         {
-          "name": "config",
-          "type": "Object",
-          "description": "Sugo caller configuration",
-          "default": "",
-          "optional": "",
-          "nullable": ""
-        }
-      ],
-      "examples": [
-        "co(function * () {\n  let actor = sugoActor({\n    key: 'my-actor-01',\n    modules: {\n    }\n  })\n  yield actor.connect()\n}).catch((err) => console.error(err))"
-      ],
-      "returns": {
-        "type": "SugoActor",
-        "description": ""
-      }
-    },
-    {
-      "name": "parseActorUrl",
-      "access": "",
-      "virtual": false,
-      "description": "Parse actor URL",
-      "parameters": [
-        {
-          "name": null,
-          "type": [
-            "Object",
-            "string"
-          ],
-          "description": "",
-          "default": "",
-          "optional": "",
-          "nullable": ""
-        }
-      ],
-      "examples": [],
-      "returns": {
-        "type": "string",
-        "description": ""
-      }
-    },
-    {
-      "name": "validateModules",
-      "access": "",
-      "virtual": false,
-      "description": "Validate modules to load",
-      "parameters": [
-        {
-          "name": "modules",
-          "type": "Object",
-          "description": "",
-          "default": "",
-          "optional": "",
-          "nullable": ""
-        }
-      ],
-      "examples": [],
-      "returns": {
-        "type": "Error",
-        "description": "- Found errors"
-      }
-    },
-    {
-      "name": "validatePerformConfig",
-      "access": "",
-      "virtual": false,
-      "description": "Validate config of perform request.",
-      "parameters": [
-        {
-          "name": "config",
-          "type": "Object",
-          "description": "",
-          "default": "",
-          "optional": "",
-          "nullable": ""
-        }
-      ],
-      "examples": [],
-      "returns": {
-        "type": "Error",
-        "description": "- Found errors"
-      }
-    }
-  ],
-  "classes": [
-    {
-      "name": "SugoActorModule",
-      "description": "",
-      "extends": [],
-      "access": "",
-      "virtual": false,
-      "fires": "",
-      "constructor": {
-        "name": "SugoActorModule",
-        "description": "Module for actor",
-        "parameters": [
-          {
-            "name": "methods",
-            "type": "Object",
-            "description": "Module methods",
-            "default": "",
-            "optional": "",
-            "nullable": ""
-          }
-        ],
-        "examples": []
-      }
-    },
-    {
-      "name": "SugoActor",
-      "description": "",
-      "extends": [
-        "SugoClient"
-      ],
-      "access": "",
-      "virtual": false,
-      "fires": "",
-      "constructor": {
-        "name": "SugoActor",
-        "description": "",
-        "parameters": [
-          {
-            "name": "url",
-            "type": "string",
-            "description": "Cloud server url",
-            "default": "",
-            "optional": "",
-            "nullable": ""
-          },
-          {
-            "name": "config",
-            "type": "object",
-            "description": "Configurations",
-            "default": "",
-            "optional": "",
-            "nullable": ""
-          },
-          {
-            "name": "config.key",
-            "type": "string",
-            "description": "Key of actor",
-            "default": "",
-            "optional": "",
-            "nullable": ""
-          },
-          {
-            "name": "config.auth",
-            "type": "object",
-            "description": "Auth object",
-            "default": "",
-            "optional": "",
-            "nullable": ""
-          },
-          {
-            "name": "config.modules",
-            "type": "object.<String, SugoActorModule>",
-            "description": "Modules to load.",
-            "default": "",
-            "optional": "",
-            "nullable": ""
-          },
-          {
-            "name": "config.path",
-            "type": "string",
-            "description": "Socket.IO option.",
-            "default": "",
-            "optional": "",
-            "nullable": ""
-          }
-        ],
-        "examples": []
-      },
-      "functions": [
-        {
-          "name": "connect",
-          "access": "",
-          "virtual": false,
-          "description": "Connect to hub.\nBy call this, actor share specification of the modules to hub so that callers can access them.",
-          "parameters": [],
-          "examples": [],
-          "returns": {
-            "type": "Promise",
-            "description": ""
-          }
-        },
-        {
-          "name": "disconnect",
-          "access": "",
-          "virtual": false,
-          "description": "Disconnect from the hub",
-          "parameters": [],
-          "examples": [],
-          "returns": {
-            "type": "Promise",
-            "description": ""
-          }
-        },
-        {
-          "name": "perform",
-          "access": "",
-          "virtual": false,
-          "description": "Handle perform event",
-          "parameters": [
-            {
-              "name": "data",
-              "type": "object",
-              "description": "",
-              "default": "",
-              "optional": "",
-              "nullable": ""
+            "name": "sugoActor",
+            "access": "",
+            "virtual": false,
+            "description": "Create an actor instance. Just an alias of `new SugoActor(config)`",
+            "parameters": [
+                {
+                    "name": "config",
+                    "type": "Object",
+                    "description": "Sugo caller configuration",
+                    "default": "",
+                    "optional": "",
+                    "nullable": ""
+                }
+            ],
+            "examples": [
+                ";(async () => {\n  let actor = sugoActor({\n    key: 'my-actor-01',\n    modules: {\n    }\n  })\n  await actor.connect()\n})().catch((err) => console.error(err))"
+            ],
+            "returns": {
+                "type": "SugoActor",
+                "description": ""
             }
-          ],
-          "examples": [],
-          "returns": {
-            "type": "Promise",
-            "description": ""
-          }
         },
         {
-          "name": "load",
-          "access": "",
-          "virtual": false,
-          "description": "Load a module",
-          "parameters": [
-            {
-              "name": "moduleName",
-              "type": "string",
-              "description": "Name of module",
-              "default": "",
-              "optional": "",
-              "nullable": ""
+            "name": "sugoActor",
+            "access": "",
+            "virtual": false,
+            "description": "Create an actor instance. Just an alias of `new SugoActor(config)`",
+            "parameters": [
+                {
+                    "name": "config",
+                    "type": "Object",
+                    "description": "Sugo caller configuration",
+                    "default": "",
+                    "optional": "",
+                    "nullable": ""
+                }
+            ],
+            "examples": [
+                ";(async () => {\n  let actor = sugoActor({\n    key: 'my-actor-01',\n    modules: {\n    }\n  })\n  await actor.connect()\n})().catch((err) => console.error(err))"
+            ],
+            "returns": {
+                "type": "SugoActor",
+                "description": ""
+            }
+        },
+        {
+            "name": "parseActorUrl",
+            "access": "",
+            "virtual": false,
+            "description": "Parse actor URL",
+            "parameters": [
+                {
+                    "name": null,
+                    "type": [
+                        "Object",
+                        "string"
+                    ],
+                    "description": "",
+                    "default": "",
+                    "optional": "",
+                    "nullable": ""
+                }
+            ],
+            "examples": [],
+            "returns": {
+                "type": "string",
+                "description": ""
+            }
+        },
+        {
+            "name": "validateModules",
+            "access": "",
+            "virtual": false,
+            "description": "Validate modules to load",
+            "parameters": [
+                {
+                    "name": "modules",
+                    "type": "Object",
+                    "description": "",
+                    "default": "",
+                    "optional": "",
+                    "nullable": ""
+                }
+            ],
+            "examples": [],
+            "returns": {
+                "type": "Error",
+                "description": "- Found errors"
+            }
+        },
+        {
+            "name": "validatePerformConfig",
+            "access": "",
+            "virtual": false,
+            "description": "Validate config of perform request.",
+            "parameters": [
+                {
+                    "name": "config",
+                    "type": "Object",
+                    "description": "",
+                    "default": "",
+                    "optional": "",
+                    "nullable": ""
+                }
+            ],
+            "examples": [],
+            "returns": {
+                "type": "Error",
+                "description": "- Found errors"
+            }
+        }
+    ],
+    "classes": [
+        {
+            "name": "SugoActorModule",
+            "description": "",
+            "extends": [],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "SugoActorModule",
+                "description": "Module for actor",
+                "parameters": [
+                    {
+                        "name": "methods",
+                        "type": "Object",
+                        "description": "Module methods",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
+            }
+        },
+        {
+            "name": "SugoActor",
+            "description": "",
+            "extends": [
+                "SugoClient"
+            ],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "SugoActor",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "url",
+                        "type": "string",
+                        "description": "Cloud server url",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config",
+                        "type": "object",
+                        "description": "Configurations",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config.key",
+                        "type": "string",
+                        "description": "Key of actor",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config.auth",
+                        "type": "object",
+                        "description": "Auth object",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config.modules",
+                        "type": "object.<String, SugoActorModule>",
+                        "description": "Modules to load.",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config.path",
+                        "type": "string",
+                        "description": "Socket.IO option.",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
             },
-            {
-              "name": "module",
-              "type": "Object",
-              "description": "Module to load",
-              "default": "",
-              "optional": "",
-              "nullable": ""
-            }
-          ],
-          "examples": [],
-          "returns": {
-            "type": "Promise",
-            "description": ""
-          }
+            "functions": [
+                {
+                    "name": "connect",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Connect to hub.\nBy call this, actor share specification of the modules to hub so that callers can access them.",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "disconnect",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Disconnect from the hub",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "perform",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Handle perform event",
+                    "parameters": [
+                        {
+                            "name": "data",
+                            "type": "object",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load a module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "module",
+                            "type": "Object",
+                            "description": "Module to load",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "loadSub",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load sub modules",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "subModules",
+                            "type": "Object",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "unload",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unload a module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "unloadSub",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unload sub module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "subModuleNames",
+                            "type": "Array.<string>",
+                            "description": "Name of sub modules",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "*",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "assertConnection",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Assert if the connected to hub",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "urlFromConfig",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "parseActorUrl",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Parse actor url",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "connect",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Connect to hub.\nBy call this, actor share specification of the modules to hub so that callers can access them.",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "disconnect",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Disconnect from the hub",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "perform",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Handle perform event",
+                    "parameters": [
+                        {
+                            "name": "data",
+                            "type": "object",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load a module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "module",
+                            "type": "Object",
+                            "description": "Module to load",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "loadSub",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load sub modules",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "subModules",
+                            "type": "Object",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "unload",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unload a module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "unloadSub",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unload sub module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "subModuleNames",
+                            "type": "Array.<string>",
+                            "description": "Name of sub modules",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "*",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "assertConnection",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Assert if the connected to hub",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "urlFromConfig",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "parseActorUrl",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Parse actor url",
+                    "parameters": [],
+                    "examples": []
+                }
+            ],
+            "properties": [
+                {
+                    "name": "clientType",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "type": ""
+                },
+                {
+                    "name": "clientType",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "type": ""
+                }
+            ]
         },
         {
-          "name": "loadSub",
-          "access": "",
-          "virtual": false,
-          "description": "Load sub modules",
-          "parameters": [
-            {
-              "name": "moduleName",
-              "type": "string",
-              "description": "",
-              "default": "",
-              "optional": "",
-              "nullable": ""
+            "name": "ActorPipeEmitter",
+            "description": "",
+            "extends": [],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "ActorPipeEmitter",
+                "description": "Pipe Emitter for actors",
+                "parameters": [],
+                "examples": []
+            }
+        },
+        {
+            "name": "ModulePipeEmitter",
+            "description": "",
+            "extends": [
+                "PipeEmitter"
+            ],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "ModulePipeEmitter",
+                "description": "Pipe emitter for modules",
+                "parameters": [],
+                "examples": []
             },
-            {
-              "name": "subModules",
-              "type": "Object",
-              "description": "",
-              "default": "",
-              "optional": "",
-              "nullable": ""
-            }
-          ],
-          "examples": [],
-          "returns": {
-            "type": "Promise",
-            "description": ""
-          }
+            "functions": [
+                {
+                    "name": "open",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Open the pipe.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "close",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Close the pipe.",
+                    "parameters": [],
+                    "examples": []
+                }
+            ]
         },
         {
-          "name": "unload",
-          "access": "",
-          "virtual": false,
-          "description": "Unload a module",
-          "parameters": [
-            {
-              "name": "moduleName",
-              "type": "string",
-              "description": "Name of module",
-              "default": "",
-              "optional": "",
-              "nullable": ""
-            }
-          ],
-          "examples": [],
-          "returns": {
-            "type": "Promise",
-            "description": ""
-          }
-        },
-        {
-          "name": "unloadSub",
-          "access": "",
-          "virtual": false,
-          "description": "Unload sub module",
-          "parameters": [
-            {
-              "name": "moduleName",
-              "type": "string",
-              "description": "Name of module",
-              "default": "",
-              "optional": "",
-              "nullable": ""
+            "name": "PipeEmitter",
+            "description": "",
+            "extends": [],
+            "access": "",
+            "virtual": true,
+            "fires": "",
+            "constructor": {
+                "name": "PipeEmitter",
+                "description": "Pipe emitter",
+                "parameters": [],
+                "examples": []
             },
-            {
-              "name": "subModuleNames",
-              "type": "Array.<string>",
-              "description": "Name of sub modules",
-              "default": "",
-              "optional": "",
-              "nullable": ""
+            "functions": [
+                {
+                    "name": "open",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Open the pipe.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "close",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Close the pipe.",
+                    "parameters": [],
+                    "examples": []
+                }
+            ]
+        },
+        {
+            "name": "SugoActorModule",
+            "description": "",
+            "extends": [],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "SugoActorModule",
+                "description": "Module for actor",
+                "parameters": [
+                    {
+                        "name": "methods",
+                        "type": "Object",
+                        "description": "Module methods",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
             }
-          ],
-          "examples": [],
-          "returns": {
-            "type": "*",
-            "description": ""
-          }
         },
         {
-          "name": "assertConnection",
-          "access": "",
-          "virtual": false,
-          "description": "Assert if the connected to hub",
-          "parameters": [],
-          "examples": []
-        },
-        {
-          "name": "urlFromConfig",
-          "access": "",
-          "virtual": false,
-          "description": "",
-          "parameters": [],
-          "examples": []
-        },
-        {
-          "name": "parseActorUrl",
-          "access": "",
-          "virtual": false,
-          "description": "Parse actor url",
-          "parameters": [],
-          "examples": []
+            "name": "SugoActor",
+            "description": "",
+            "extends": [
+                "SugoClient"
+            ],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "SugoActor",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "url",
+                        "type": "string",
+                        "description": "Cloud server url",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config",
+                        "type": "object",
+                        "description": "Configurations",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config.key",
+                        "type": "string",
+                        "description": "Key of actor",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config.auth",
+                        "type": "object",
+                        "description": "Auth object",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config.modules",
+                        "type": "object.<String, SugoActorModule>",
+                        "description": "Modules to load.",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    },
+                    {
+                        "name": "config.path",
+                        "type": "string",
+                        "description": "Socket.IO option.",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
+            },
+            "functions": [
+                {
+                    "name": "connect",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Connect to hub.\nBy call this, actor share specification of the modules to hub so that callers can access them.",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "disconnect",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Disconnect from the hub",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "perform",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Handle perform event",
+                    "parameters": [
+                        {
+                            "name": "data",
+                            "type": "object",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load a module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "module",
+                            "type": "Object",
+                            "description": "Module to load",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "loadSub",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load sub modules",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "subModules",
+                            "type": "Object",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "unload",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unload a module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "unloadSub",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unload sub module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "subModuleNames",
+                            "type": "Array.<string>",
+                            "description": "Name of sub modules",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "*",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "assertConnection",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Assert if the connected to hub",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "urlFromConfig",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "parseActorUrl",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Parse actor url",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "connect",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Connect to hub.\nBy call this, actor share specification of the modules to hub so that callers can access them.",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "disconnect",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Disconnect from the hub",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "perform",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Handle perform event",
+                    "parameters": [
+                        {
+                            "name": "data",
+                            "type": "object",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load a module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "module",
+                            "type": "Object",
+                            "description": "Module to load",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "loadSub",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load sub modules",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "subModules",
+                            "type": "Object",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "unload",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unload a module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Promise",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "unloadSub",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unload sub module",
+                    "parameters": [
+                        {
+                            "name": "moduleName",
+                            "type": "string",
+                            "description": "Name of module",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "subModuleNames",
+                            "type": "Array.<string>",
+                            "description": "Name of sub modules",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "*",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "assertConnection",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Assert if the connected to hub",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "urlFromConfig",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "parseActorUrl",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Parse actor url",
+                    "parameters": [],
+                    "examples": []
+                }
+            ],
+            "properties": [
+                {
+                    "name": "clientType",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "type": ""
+                },
+                {
+                    "name": "clientType",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "type": ""
+                }
+            ]
         }
-      ],
-      "properties": [
-        {
-          "name": "clientType",
-          "access": "",
-          "virtual": false,
-          "description": "",
-          "type": ""
-        }
-      ]
-    },
-    {
-      "name": "ActorPipeEmitter",
-      "description": "",
-      "extends": [],
-      "access": "",
-      "virtual": false,
-      "fires": "",
-      "constructor": {
-        "name": "ActorPipeEmitter",
-        "description": "Pipe Emitter for actors",
-        "parameters": [],
-        "examples": []
-      }
-    },
-    {
-      "name": "ModulePipeEmitter",
-      "description": "",
-      "extends": [
-        "PipeEmitter"
-      ],
-      "access": "",
-      "virtual": false,
-      "fires": "",
-      "constructor": {
-        "name": "ModulePipeEmitter",
-        "description": "Pipe emitter for modules",
-        "parameters": [],
-        "examples": []
-      },
-      "functions": [
-        {
-          "name": "open",
-          "access": "",
-          "virtual": false,
-          "description": "Open the pipe.",
-          "parameters": [],
-          "examples": []
-        },
-        {
-          "name": "close",
-          "access": "",
-          "virtual": false,
-          "description": "Close the pipe.",
-          "parameters": [],
-          "examples": []
-        }
-      ]
-    },
-    {
-      "name": "PipeEmitter",
-      "description": "",
-      "extends": [],
-      "access": "",
-      "virtual": true,
-      "fires": "",
-      "constructor": {
-        "name": "PipeEmitter",
-        "description": "Pipe emitter",
-        "parameters": [],
-        "examples": []
-      },
-      "functions": [
-        {
-          "name": "open",
-          "access": "",
-          "virtual": false,
-          "description": "Open the pipe.",
-          "parameters": [],
-          "examples": []
-        },
-        {
-          "name": "close",
-          "access": "",
-          "virtual": false,
-          "description": "Close the pipe.",
-          "parameters": [],
-          "examples": []
-        }
-      ]
-    }
-  ]
+    ]
 }

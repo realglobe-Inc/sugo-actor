@@ -10,7 +10,6 @@ process.chdir(`${__dirname}/..`)
 process.env.DEBUG = 'sg:*'
 
 const apeTasking = require('ape-tasking')
-const co = require('co')
 const sgSocket = require('sg-socket')
 const { exec } = require('child_process')
 
@@ -29,7 +28,7 @@ apeTasking.runTasks('browser test', [
       err ? reject(err) : resolve(stdout)
     })
   }),
-  () => co(function * () {
+  async () => {
     server = sgSocket(port)
     server.of('/actors').on('connection', (socket) => {
       socket.on(HI, (data, callback) => {
@@ -47,7 +46,7 @@ apeTasking.runTasks('browser test', [
       socket.on(PIPE, (data) => {
       })
     })
-  }),
+  },
   () => new Promise((resolve, reject) => {
     exec('./node_modules/.bin/karma start', (err, stdout, stderr) => {
       if (err) {
@@ -58,7 +57,5 @@ apeTasking.runTasks('browser test', [
       resolve()
     })
   }),
-  () => co(function * () {
-    server.close()
-  })
+  () => server.close()
 ], true)
