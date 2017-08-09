@@ -1,6 +1,6 @@
 {
   "name": "sugo-actor",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Actor component of SUGOS.",
   "main": "lib",
   "browser": "shim/browser",
