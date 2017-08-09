@@ -6,20 +6,20 @@
 
 const parseActorUrl = require('../lib/parsing/parse_actor_url.js')
 const assert = require('assert')
-const co = require('co')
+
 
 describe('parse-actor-url', function () {
   this.timeout(3000)
 
-  before(() => co(function * () {
+  before(() => {
 
-  }))
+  })
 
-  after(() => co(function * () {
+  after(() => {
 
-  }))
+  })
 
-  it('Parse actor url', () => co(function * () {
+  it('Parse actor url', () => {
     assert.equal(
       parseActorUrl('http://localhost:3000/actors'),
       'http://localhost:3000/actors'
@@ -38,7 +38,7 @@ describe('parse-actor-url', function () {
       'http://example.com:3001/actors'
     )
 
-  }))
+  })
 })
 
 /* global describe, before, after, it */
