@@ -1,6 +1,6 @@
 {
   "name": "sugo-actor",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "Actor component of SUGOS.",
   "main": "lib",
   "browser": "shim/browser",
@@ -74,7 +74,7 @@
     "sugos-assets": "^2.0.3",
     "sugos-travis": "^2.0.7",
     "the-script-jsdoc": "^2.0.0",
-    "writeout": "^2.2.0"
+    "writeout": "^2.2.1"
   },
   "engines": {
     "node": ">=7.6",
