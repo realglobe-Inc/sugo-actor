@@ -586,7 +586,50 @@
                 "description": "Pipe Emitter for actors",
                 "parameters": [],
                 "examples": []
-            }
+            },
+            "functions": [
+                {
+                    "name": "emit",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Emit event",
+                    "parameters": [
+                        {
+                            "name": "event",
+                            "type": "string",
+                            "description": "Name of event",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "data",
+                            "type": "Object",
+                            "description": "Event data",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "options",
+                            "type": "Object",
+                            "description": "Optional settings",
+                            "default": "{}",
+                            "optional": true,
+                            "nullable": ""
+                        },
+                        {
+                            "name": "options.only",
+                            "type": "Array.<string>",
+                            "description": "Target caller keys",
+                            "default": "",
+                            "optional": true,
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                }
+            ]
         },
         {
             "name": "ModulePipeEmitter",
@@ -604,6 +647,47 @@
                 "examples": []
             },
             "functions": [
+                {
+                    "name": "emit",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Emit event",
+                    "parameters": [
+                        {
+                            "name": "event",
+                            "type": "string",
+                            "description": "Name of event",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "data",
+                            "type": "Object",
+                            "description": "Event data",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "options",
+                            "type": "Object",
+                            "description": "Optional settings",
+                            "default": "{}",
+                            "optional": true,
+                            "nullable": ""
+                        },
+                        {
+                            "name": "options.only",
+                            "type": "Array.<string>",
+                            "description": "Target caller keys",
+                            "default": "",
+                            "optional": true,
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
                 {
                     "name": "open",
                     "access": "",
